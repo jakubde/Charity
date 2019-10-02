@@ -10,13 +10,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
 </head>
 <body>
-
 <header class="header--main-page">
+    <nav class="container container--70">
+        <ul class="nav--actions">
+            <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
+            <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+        </ul>
 
-    <jsp:include page="header.jsp"/>
+        <ul>
+            <li><a href="#" class="btn btn--without-border active">Start</a></li>
+            <li><a href="#" class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href="#" class="btn btn--without-border">O nas</a></li>
+            <li><a href="#" class="btn btn--without-border">Fundacje i organizacje</a></li>
+            <li><a href="#" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+    </nav>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -82,9 +93,9 @@
         <h2>O nas</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt libero
             optio esse quisquam illo omnis.</p>
-        <img src="<c:url value="/resources/images/signature.svg"/>" class="about-us--text-signature" alt="Signature"/>
+        <img src="images/signature.svg" class="about-us--text-signature" alt="Signature"/>
     </div>
-    <div class="about-us--image"><img src="<c:url value="/resources/images/about-us.jpg"/>" alt="People in circle"/>
+    <div class="about-us--image"><img src="<c:url value="resources/images/about-us.jpg"/>" alt="People in circle"/>
     </div>
 </section>
 
@@ -126,8 +137,29 @@
 
 </section>
 
-<jsp:include page="footer.jsp"/>
+<footer>
+    <div class="contact">
+        <h2>Skontaktuj się z nami</h2>
+        <h3>Formularz kontaktowy</h3>
+        <form class="form--contact">
+            <div class="form-group form-group--50"><input type="text" name="name" placeholder="Imię"/></div>
+            <div class="form-group form-group--50"><input type="text" name="surname" placeholder="Nazwisko"/></div>
 
-<script src="<c:url value="/resources/js/app.js"/>"></script>
+            <div class="form-group"><textarea name="message" placeholder="Wiadomość" rows="1"></textarea></div>
+
+            <button class="btn" type="submit">Wyślij</button>
+        </form>
+    </div>
+    <div class="bottom-line">
+        <span class="bottom-line--copy">Copyright &copy; 2018</span>
+        <div class="bottom-line--icons">
+            <a href="#" class="btn btn--small"><img src="images/icon-facebook.svg"/></a> <a href="#"
+                                                                                            class="btn btn--small"><img
+                src="images/icon-instagram.svg"/></a>
+        </div>
+    </div>
+</footer>
+
+<script src="<c:url value="resources/js/app.js"/>"></script>
 </body>
 </html>
