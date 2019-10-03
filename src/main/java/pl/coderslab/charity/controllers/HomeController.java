@@ -1,4 +1,4 @@
-package pl.coderslab.charity;
+package pl.coderslab.charity.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String homeAction(Model model){
-//        log.debug("log inside controller");
+//        log.debug("log inside controllers");
         return "index";
     }
 }
