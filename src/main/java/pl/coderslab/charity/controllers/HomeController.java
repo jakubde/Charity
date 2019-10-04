@@ -30,9 +30,11 @@ public class HomeController {
         log.debug("log inside controller");
         List<InstitutionDto> institutionDtos = institutionService.getList();
         int donationSum = donationService.donationSum();
+        int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
 
         model.addAttribute("institutions", institutionDtos);
         model.addAttribute("donationSum", donationSum);
+        model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
         return "index";
     }
 }

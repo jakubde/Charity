@@ -54,6 +54,10 @@ public class DonationService {
     }
 
     public int donationSum(){
-        return donationRepository.sumOfAllDonations();
+        return donationRepository.sumAllDonations();
+    }
+
+    public int distinctInstitutionsCount(){
+        return donationRepository.countAllDistinctInstitutions();
     }
 }
