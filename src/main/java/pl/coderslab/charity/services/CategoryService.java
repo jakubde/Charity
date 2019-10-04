@@ -24,6 +24,16 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+
+    public CategoryDto entityToDto (Category category){
+        return modelMapper.map(category, CategoryDto.class);
+    }
+
+    public Category dtoToEntity (CategoryDto categoryDto){
+        return modelMapper.map(categoryDto, Category.class);
+    }
+
+
     public void saveCategory(CategoryDto categoryDto) {
         categoryRepository.save(dtoToEntity(categoryDto));
     }
@@ -43,14 +53,5 @@ public class CategoryService {
             categoryDtos.add(entityToDto(category));
         }
         return categoryDtos;
-    }
-
-
-    public CategoryDto entityToDto (Category category){
-        return modelMapper.map(category, CategoryDto.class);
-    }
-
-    public Category dtoToEntity (CategoryDto categoryDto){
-        return modelMapper.map(categoryDto, Category.class);
     }
 }
