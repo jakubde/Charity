@@ -4,11 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.model.dtos.InstitutionDto;
-import pl.coderslab.charity.model.entities.Institution;
-import pl.coderslab.charity.model.repositories.InstitutionRepository;
+import pl.coderslab.charity.services.DonationService;
 import pl.coderslab.charity.services.InstitutionService;
 
 import java.util.List;
@@ -19,11 +17,11 @@ import java.util.List;
 public class HomeController {
 
     private final InstitutionService institutionService;
-    private final InstitutionRepository institutionRepository;
+    private final DonationService donationService;
 
-    public HomeController(InstitutionService institutionService, InstitutionRepository institutionRepository) {
+    public HomeController(InstitutionService institutionService, DonationService donationService) {
         this.institutionService = institutionService;
-        this.institutionRepository = institutionRepository;
+        this.donationService = donationService;
     }
 
 
@@ -31,7 +29,10 @@ public class HomeController {
     public String homeAction(Model model){
         log.debug("log inside controller");
         List<InstitutionDto> institutionDtos = institutionService.getList();
+        int donationSum = donationService.donationSum();
+
         model.addAttribute("institutions", institutionDtos);
+        model.addAttribute("donationSum", donationSum);
         return "index";
     }
 }

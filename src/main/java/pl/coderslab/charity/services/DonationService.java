@@ -52,4 +52,8 @@ public class DonationService {
         }
         return donationDtos;
     }
+
+    public int donationSum(){
+        return donationRepository.sumOfAllDonations();
+    }
 }
