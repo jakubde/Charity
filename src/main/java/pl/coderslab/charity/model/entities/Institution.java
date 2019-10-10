@@ -1,8 +1,6 @@
 package pl.coderslab.charity.model.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +8,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "institutions")
 public class Institution extends BaseEntity {

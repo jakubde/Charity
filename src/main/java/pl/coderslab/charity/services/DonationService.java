@@ -3,6 +3,7 @@ package pl.coderslab.charity.services;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.coderslab.charity.model.dtos.CategoryDto;
 import pl.coderslab.charity.model.dtos.DonationDto;
 import pl.coderslab.charity.model.entities.Donation;
 import pl.coderslab.charity.model.repositories.DonationRepository;
@@ -32,15 +33,23 @@ public class DonationService {
     }
 
 
-    public void saveCategory(DonationDto donationDto) {
+    public DonationDto saveDonation(DonationDto donationDto) {
+        return entityToDto(donationRepository.saveAndFlush(dtoToEntity(donationDto)));
+    }
+
+    public void save(DonationDto donationDto, List<CategoryDto> categoryDtos){
+        for(CategoryDto categoryDto: categoryDtos){
+            donationRepository.saveDonationIdCategoryId(donationDto.getId(), categoryDto.getId());
+            System.out.println("donationId = " + donationDto.getId() + " | categoryId = " + categoryDto.getId());
+        }
+    }
+
+
+    public void updateDonation(DonationDto donationDto) {
         donationRepository.save(dtoToEntity(donationDto));
     }
 
-    public void updateCategory(DonationDto donationDto) {
-        donationRepository.save(dtoToEntity(donationDto));
-    }
-
-    public void deleteCategory(Long id) {
+    public void deleteDonation(Long id) {
         donationRepository.deleteById(id);
     }
 
@@ -53,11 +62,14 @@ public class DonationService {
         return donationDtos;
     }
 
-    public int donationSum(){
+    public Integer donationSum(){
         return donationRepository.sumAllDonations();
     }
 
     public int distinctInstitutionsCount(){
         return donationRepository.countAllDistinctInstitutions();
     }
+
+
+
 }

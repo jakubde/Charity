@@ -29,7 +29,7 @@ public class HomeController {
     public String homeAction(Model model){
         log.debug("log inside controller");
         List<InstitutionDto> institutionDtos = institutionService.getList();
-        int donationSum = donationService.donationSum();
+        Integer donationSum = donationService.donationSum();
         int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
 
         model.addAttribute("institutions", institutionDtos);

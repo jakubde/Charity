@@ -1,11 +1,13 @@
 package pl.coderslab.charity.model.dtos;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Data
+@NoArgsConstructor
 public class InstitutionDto {
 
     @Id

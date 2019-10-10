@@ -52,4 +52,9 @@ public class InstitutionService {
         }
         return institutionDtos;
     }
+
+    public InstitutionDto findById(Long id){
+        return entityToDto(institutionRepository.findAllById(id));
+    }
+
 }

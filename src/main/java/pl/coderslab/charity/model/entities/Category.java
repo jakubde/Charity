@@ -1,16 +1,16 @@
 package pl.coderslab.charity.model.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@AttributeOverride(name="id", column=@Column(name="category_id"))
 @Table(name = "categories")
 public class Category extends BaseEntity {
 

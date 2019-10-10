@@ -54,4 +54,15 @@ public class CategoryService {
         }
         return categoryDtos;
     }
+
+    public List<CategoryDto> stringWithIdsToCategoryDtoList(String ids){
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for(String id : ids.split(",")){
+            Long longId = Long.parseLong(id);
+            Category category = categoryRepository.findAllById(longId);
+            CategoryDto categoryDto = entityToDto(category);
+            categoryDtos.add(categoryDto);
+        }
+        return categoryDtos;
+    }
 }
