@@ -20,27 +20,8 @@
 </head>
 <body>
 <header class="header--form-page">
-    <nav class="container container--70">
-        <ul class="nav--actions">
-            <li class="logged-user">
-                Witaj Agata
-                <ul class="dropdown">
-                    <li><a href="#">Profil</a></li>
-                    <li><a href="#">Ustawienia</a></li>
-                    <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
-                </ul>
-            </li>
-        </ul>
 
-        <ul>
-            <li><a href="index.html" class="btn btn--without-border active">Start</a></li>
-            <li><a href="index.html#steps" class="btn btn--without-border">O co chodzi?</a></li>
-            <li><a href="index.html#about-us" class="btn btn--without-border">O nas</a></li>
-            <li><a href="index.html#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            <li><a href="index.html#contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-    </nav>
+    <jsp:include page="header.jsp"/>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -93,16 +74,6 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-<%--        <form:checkboxes path="categories" items="${categories} "/>--%>
-<%--        <form:select path="institution" items="${institutions}"/>--%>
-<%--        <form:input path="zipCode" />--%>
-<%--        <form:input path="street" />--%>
-<%--        <form:input path="city"/>--%>
-<%--        <form:input path="quantity"/>--%>
-<%--        <form:textarea path="pickUpComment"/>--%>
-<%--        <form:input type="date" path="pickUpDate"/>--%>
-<%--        <form:input type="time" path="pickUpTime" />--%>
-
             <form:form method="post" modelAttribute="donation">
 
             <!-- STEP 1: class .active is switching steps -->
@@ -112,7 +83,7 @@
                 <c:forEach items="${categories}" var="category">
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <form:checkbox path="categoryDtos" cssClass="auxiliary" value="${category.id}"/>
+                        <form:checkbox path="categoryIds" cssClass="auxiliary" value="${category.id}"/>
 <%--                    Javascript insert <span class="checkbox"></span>                        --%>
                         <span class="description"> ${category.name} </span>
                     </label>
@@ -150,7 +121,7 @@
                 <c:forEach items="${institutions}" var="institution">
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <form:radiobutton path="institutionDto" value="${institution.id}"/>
+                        <form:radiobutton path="institutionId" value="${institution.id}"/>
                         <span class="checkbox radio"></span>
                         <span class="description">
                   <div class="title">${institution.name}</div>
@@ -176,20 +147,17 @@
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
                             <label> Ulica
-<%--                                <input type="text" name="address" /> </label>--%>
                                 <form:input path="street"/>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label> Miasto
-<%--                                <input type="text" name="city" /> </label>--%>
                                 <form:input path="city"/>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Kod pocztowy
-<%--                                <input type="text" name="postcode" />--%>
                                 <form:input path="zipCode"/>
                             </label>
                         </div>
@@ -197,7 +165,6 @@
                         <div class="form-group form-group--inline">
                             <label>
                                 Numer telefonu
-<%--                                <input type="phone" name="phone" />--%>
                                 <form:input path="telephoneNumber" type="phone"/>
                             </label>
                         </div>
@@ -207,14 +174,12 @@
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
                             <label> Data
-<%--                                <input type="date" name="data" />--%>
                                 <form:input path="pickUpDate" type="date"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label> Godzina
-<%--                                <input type="time" name="time" />--%>
                                 <form:input path="pickUpTime" type="time"/>
                             </label>
                         </div>
@@ -222,7 +187,6 @@
                         <div class="form-group form-group--inline">
                             <label>
                                 Uwagi dla kuriera
-<%--                                <textarea name="more_info" rows="5"></textarea>--%>
                                 <form:textarea path="pickUpComment" rows="5"/>
                             </label>
                         </div>
@@ -286,41 +250,7 @@
     </div>
 </section>
 
-<footer>
-    <div class="contact">
-        <h2>Skontaktuj się z nami</h2>
-        <h3>Formularz kontaktowy</h3>
-        <form class="form--contact">
-            <div class="form-group form-group--50">
-                <input type="text" name="name" placeholder="Imię" />
-            </div>
-            <div class="form-group form-group--50">
-                <input type="text" name="surname" placeholder="Nazwisko" />
-            </div>
-
-            <div class="form-group">
-            <textarea
-                    name="message"
-                    placeholder="Wiadomość"
-                    rows="1"
-            ></textarea>
-            </div>
-
-            <button class="btn" type="submit">Wyślij</button>
-
-    </div>
-    <div class="bottom-line">
-        <span class="bottom-line--copy">Copyright &copy; 2018</span>
-        <div class="bottom-line--icons">
-            <a href="#" class="btn btn--small"
-            ><img src="<c:url value="resources/images/icon-facebook.svg"/>"
-            /></a>
-            <a href="#" class="btn btn--small"
-            ><img src="<c:url value="resources/images/icon-instagram.svg"/>"
-            /></a>
-        </div>
-    </div>
-</footer>
+<jsp:include page="footer.jsp"/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="../../resources/js/app.js"></script>
