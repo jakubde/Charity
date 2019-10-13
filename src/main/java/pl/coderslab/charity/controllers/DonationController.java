@@ -40,7 +40,6 @@ public class DonationController {
         return "form";
     }
 
-
     @PostMapping
     public String processAddDonation(DonationDto donationDto){
 

@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
          * Handling of checkboxes with categories
          */
 
-        //Getting checked checkboxes elements
+            //Getting checked checkboxes elements
         let checkedCheckboxes = $("input:checked.auxiliary").parent();//dla radio bez tego .auxiliary
 
         //Getting categories names
