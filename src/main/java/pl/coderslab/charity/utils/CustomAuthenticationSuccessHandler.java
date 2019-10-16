@@ -1,5 +1,6 @@
 package pl.coderslab.charity.utils;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -16,7 +17,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     private final UserService userService;
 
-    public CustomAuthenticationSuccessHandler(UserService userService) {
+    public CustomAuthenticationSuccessHandler(@Lazy UserService userService) {
         this.userService = userService;
     }
 
