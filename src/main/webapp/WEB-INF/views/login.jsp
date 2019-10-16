@@ -17,12 +17,15 @@
 
     <section class="login-page">
       <h2>Zaloguj się</h2>
-      <form action="/logina" method="post">
+        <form method="post" action="/login">
         <div class="form-group">
-          <input type="email" name='username' placeholder="Email" />
+<%--          <input type="text" id="username" name="username" class="form-control" placeholder="Email" required autofocus>--%>
+          <label for="username"></label>
+          <input type="text" id="username" name="username" placeholder="Email" required autofocus/>
         </div>
         <div class="form-group">
-          <input type="password" name='password' placeholder="Hasło" />
+          <label for="password"></label>
+          <input type="password" id="password" name="password" placeholder="Hasło" required/>
           <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
 
@@ -30,6 +33,7 @@
           <a href="#" class="btn btn--without-border">Załóż konto</a>      
           <button class="btn" type="submit">Zaloguj się</button> 
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       </form>
     </section>
 

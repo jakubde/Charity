@@ -39,6 +39,8 @@ public class User extends BaseEntity {
     @NotBlank
     private String password;
 
+    private Boolean enabled;
+
     @ElementCollection
     @CollectionTable(name = "user_authorities",
             joinColumns = @JoinColumn(name = "email", referencedColumnName = "email")

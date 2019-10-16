@@ -3,10 +3,8 @@ package pl.coderslab.charity.services;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.coderslab.charity.model.dtos.RoleDto;
 import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.model.entities.User;
-import pl.coderslab.charity.model.entities.embeddable.Role;
 import pl.coderslab.charity.model.repositories.UserRepository;
 
 @Service
@@ -22,14 +20,11 @@ public class UserService {
     }
 
     public User dtoToEntity (UserDto userDto){
+        return modelMapper.map(userDto, User.class);
+    }
 
-        User user = modelMapper.map(userDto, User.class);
-
-//        for(RoleDto roleDto : userDto.getRoles()){
-//            user.getRoles().add(modelMapper.map(roleDto, Role.class));
-//        }
-
-        return user;
+    public UserDto entityToDto (User user){
+        return  modelMapper.map(user, UserDto.class);
     }
 
     public void saveUser(UserDto userDto){
@@ -38,5 +33,9 @@ public class UserService {
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public UserDto findUserbyEmail(String email){
+        return entityToDto(userRepository.findByEmail(email));
     }
 }

@@ -4,11 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import pl.coderslab.charity.utils.CustomAuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -18,18 +19,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private DataSource dataSource;
 
-    public WebSecurityConfig(DataSource dataSource) {
+    public WebSecurityConfig(DataSource dataSource, CustomAuthenticationSuccessHandler successHandler) {
         this.dataSource = dataSource;
+        this.successHandler = successHandler;
     }
+
+    private final CustomAuthenticationSuccessHandler successHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
     }
 
     @Override
@@ -38,40 +37,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT firstName, lastName, email FROM users WHERE email = ?")
+                .usersByUsernameQuery("SELECT email, password, enabled, first_name, last_name FROM users WHERE email = ?")
                 .authoritiesByUsernameQuery("SELECT email, authority FROM user_authorities WHERE email = ?");
 
     }
 
-    private String[] staticResources = {
-            "/resources/css/**",
-            "/resources/images/**",
-            "/resources/js/**",
-    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(staticResources).permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/donate").permitAll()
+                .antMatchers("/donate").authenticated()
+                .antMatchers("/login*").permitAll()
+                .antMatchers("/logout").authenticated()
                 .antMatchers("/register").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
+                .successHandler(successHandler)
                 .and()
                 .logout()
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
                 .csrf()
-                .and()
-                .exceptionHandling().accessDeniedPage("/WEB-INF/views/accessDenied.jsp")
                 .and();
+    }
+
+    @Override
+    public void configure(final WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
     }
 
 }

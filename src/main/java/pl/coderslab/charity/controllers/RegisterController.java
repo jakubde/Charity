@@ -34,8 +34,8 @@ public class RegisterController {
     @PostMapping
     public String processAddUser(UserDto userDto){
         userDto.setId(null);
-        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-        userDto.setPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());//do serwisu
+        userDto.setPassword(encodedPassword);//do serwisu
         userDto.setEnabled(true);
         RoleDto roleUser = new RoleDto();
         roleUser.setAuthority("ROLE_USER");
