@@ -18,3 +18,32 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+div.add-box {
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+a.add-element {
+    font-size: medium;
+    text-align: right;
+}
+
+div.add-element {
+    margin-right: 5%;
+    margin-bottom: 10px;
+    float: right;
+    border: solid #3c3c3c;
+}
+
+div.inner {
+    margin: 5px;
+}
+
+/*mgmt-form*/
+
+form.mgmt-form {
+    display: block;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}

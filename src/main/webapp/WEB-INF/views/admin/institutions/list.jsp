@@ -25,6 +25,10 @@
 
 <h2>Zaufane instytucje</h2>
 
+<div class="add-element">
+    <div class="inner"><a class="add-element" href="/institutions/add">Dodaj instytucję</a></div>
+</div>
+
 <table>
     <tr>
         <th>Nazwa</th>
@@ -35,7 +39,7 @@
     <tr>
         <td>${institution.name}</td>
         <td>${institution.description}</td>
-        <td><a href="/institutions/add/${institution.id}">Edytuj</a> </td>
+        <td><a href="/institutions/edit/${institution.id}">Edytuj</a> </td>
         <td><a href="/institutions/delete/${institution.id}">Usuń</a> </td>
     </tr>
     </c:forEach>

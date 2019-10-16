@@ -47,11 +47,9 @@
         <li><a href="/#link1" class="btn btn--without-border">O co chodzi?</a></li>
         <li><a href="/#link2" class="btn btn--without-border">O nas</a></li>
         <li><a href="/#link3" class="btn btn--without-border">Fundacje i organizacje</a></li>
-        <sec:authorize access="isAuthenticated()">
+        <sec:authorize access="hasRole('USER')">
             <li><a href="/donate" class="btn btn--without-border">Przekaż dary</a></li>
         </sec:authorize>
-
-
         <li><a href="/#link4" class="btn btn--without-border">Kontakt</a></li>
     </ul>
 </nav>
