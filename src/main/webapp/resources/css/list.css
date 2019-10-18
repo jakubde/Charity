@@ -46,4 +46,12 @@ form.mgmt-form {
     display: block;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
+    font-size: medium;
+    text-align: center;
+}
+
+div.mgmt-form {
+    width: 40%;
+    margin-left: 40%;
+    text-align: left;
 }

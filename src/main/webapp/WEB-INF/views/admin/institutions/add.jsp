@@ -18,15 +18,16 @@
 
 <h2>Dodawanie instytucji</h2>
 
-<div class="mgmt-form">
-    <form:form cssClass="mgmt-form" method="post" modelAttribute="institution">
 
+<form:form cssClass="mgmt-form" method="post" modelAttribute="institution">
+    <div class="mgmt-form">
         <p>Nazwa: <form:input path="name"/></p>
 
         <p>Opis: <form:textarea path="description"/></p>
 
         <input type="submit" value="Dodaj"/>
-    </form:form>
-</div>
+    </div>
+</form:form>
+
 </body>
 </html>

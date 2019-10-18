@@ -1,14 +1,14 @@
 package pl.coderslab.charity.services;
 
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.charity.model.dtos.CategoryDto;
 import pl.coderslab.charity.model.entities.Category;
 import pl.coderslab.charity.model.repositories.CategoryRepository;
+import pl.coderslab.charity.utils.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,30 +16,16 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final ModelMapper modelMapper;
+    private final ObjectMapper objectMapper;
 
 
-    public CategoryService(ModelMapper modelMapper, CategoryRepository categoryRepository) {
-        this.modelMapper = modelMapper;
+    public CategoryService(CategoryRepository categoryRepository, ObjectMapper objectMapper) {
         this.categoryRepository = categoryRepository;
+        this.objectMapper = objectMapper;
     }
-
-
-    public CategoryDto entityToDto (Category category){
-        return modelMapper.map(category, CategoryDto.class);
-    }
-
-    public Category dtoToEntity (CategoryDto categoryDto){
-        return modelMapper.map(categoryDto, Category.class);
-    }
-
 
     public void saveCategory(CategoryDto categoryDto) {
-        categoryRepository.save(dtoToEntity(categoryDto));
-    }
-
-    public void updateCategory(CategoryDto categoryDto) {
-        categoryRepository.save(dtoToEntity(categoryDto));
+        categoryRepository.save(objectMapper.convert(categoryDto, Category.class));
     }
 
     public void deleteCategory(Long id) {
@@ -47,22 +33,7 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getList(){
-        List<CategoryDto> categoryDtos = new ArrayList<>();
-
-        for (Category category : categoryRepository.findAll()){
-            categoryDtos.add(entityToDto(category));
-        }
-        return categoryDtos;
+        return objectMapper.convertAll(categoryRepository.findAll(), CategoryDto.class);
     }
 
-    public List<CategoryDto> stringWithIdsToCategoryDtoList(String ids){
-        List<CategoryDto> categoryDtos = new ArrayList<>();
-        for(String id : ids.split(",")){
-            Long longId = Long.parseLong(id);
-            Category category = categoryRepository.findAllById(longId);
-            CategoryDto categoryDto = entityToDto(category);
-            categoryDtos.add(categoryDto);
-        }
-        return categoryDtos;
-    }
 }

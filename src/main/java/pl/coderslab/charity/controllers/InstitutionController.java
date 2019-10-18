@@ -34,39 +34,37 @@ public class InstitutionController {
     }
 
     @GetMapping("/add")
-    public String prepareAddInstitutionPage(Model model){
+    public String prepareAddInstitutionPage(Model model) {
         model.addAttribute("institution", new InstitutionDto());
         return "admin/institutions/add";
     }
 
     @PostMapping("/add")
-    public String processAddInstitutionPage(InstitutionDto institutionDto){
+    public String processAddInstitutionPage(InstitutionDto institutionDto) {
         institutionService.saveInstitution(institutionDto);
         return "redirect:/institutions";
     }
 
     @GetMapping("/edit/{id}")
-    public String prepareEditInstitutionPage(@PathVariable String id, Model model){
+    public String prepareEditInstitutionPage(@PathVariable String id, Model model) {
         InstitutionDto editedInstitution = institutionService.findById(Long.parseLong(id));
         model.addAttribute("institution", editedInstitution);
-        if(editedInstitution == null){
+        if (editedInstitution == null) {
             return "institutions/edit/{id}";
         }
         return "admin/institutions/add";
     }
 
+    @PostMapping("edit/{id}")
+    public String processEditInstitutionPage(InstitutionDto institutionDto) {
+
+        if (institutionDto.getId() != null) {
+            institutionService.saveInstitution(institutionDto);
+        }
+        return "redirect:/institutions";
+    }
 
 
-    //    @GetMapping
-    //    public String prepareEditLicence(@PathVariable String id, Model model) {
-    //        Licence editedLicence = licenceRepository.findAllById(Long.parseLong(id));
-    //        model.addAttribute("licence", editedLicence);
-    //        if(editedLicence == null){
-    //            return "licences/add/{id}";
-    //        }
-    //        return "admin/licences/add";
-    //    }
-    //
     //    @PostMapping
     //    public String processEditLicence(Licence licence, BindingResult result) {
     //        if(result.hasErrors()){

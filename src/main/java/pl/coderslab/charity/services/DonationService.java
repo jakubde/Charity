@@ -1,70 +1,28 @@
 package pl.coderslab.charity.services;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.charity.model.dtos.DonationDto;
-import pl.coderslab.charity.model.entities.Category;
 import pl.coderslab.charity.model.entities.Donation;
-import pl.coderslab.charity.model.repositories.CategoryRepository;
 import pl.coderslab.charity.model.repositories.DonationRepository;
-import pl.coderslab.charity.model.repositories.InstitutionRepository;
+import pl.coderslab.charity.utils.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class DonationService {
 
-    private final CategoryRepository categoryRepository;
     private final DonationRepository donationRepository;
-    private final InstitutionRepository institutionRepository;
-    private final ModelMapper modelMapper;
+    private final ObjectMapper objectMapper;
 
-    public DonationService(CategoryRepository categoryRepository, DonationRepository donationRepository, InstitutionRepository institutionRepository, ModelMapper modelMapper) {
-        this.categoryRepository = categoryRepository;
+    public DonationService(DonationRepository donationRepository, ObjectMapper objectMapper) {
         this.donationRepository = donationRepository;
-        this.institutionRepository = institutionRepository;
-        this.modelMapper = modelMapper;
-    }
-
-    public DonationDto entityToDto (Donation donation){
-
-        DonationDto donationDto = modelMapper.map(donation, DonationDto.class);
-
-        List<Long> auxiliaryList = new ArrayList<>();
-        for(Category category: donation.getCategories()){
-            auxiliaryList.add(category.getId());
-        }
-        donationDto.setCategoryIds(auxiliaryList);
-
-        donationDto.setInstitutionId(donation.getInstitution().getId());
-
-        return donationDto;
-    }
-
-    public Donation dtoToEntity (DonationDto donationDto){
-
-        Donation donation = modelMapper.map(donationDto, Donation.class);
-
-        List<Category> auxiliaryList = new ArrayList<>();
-        for (Long categoryId: donationDto.getCategoryIds()) {
-            auxiliaryList.add(categoryRepository.findAllById(categoryId));
-        }
-        donation.setCategories(auxiliaryList);
-
-        donation.setInstitution(institutionRepository.findAllById(donationDto.getInstitutionId()));
-
-        return donation;
+        this.objectMapper = objectMapper;
     }
 
     public void saveDonation(DonationDto donationDto){
-        donationRepository.save(dtoToEntity(donationDto));
-    }
-
-    public void updateDonation(DonationDto donationDto) {
-        donationRepository.save(dtoToEntity(donationDto));
+        donationRepository.save(objectMapper.convert(donationDto, Donation.class));
     }
 
     public void deleteDonation(Long id) {
@@ -72,12 +30,7 @@ public class DonationService {
     }
 
     public List<DonationDto> getList(){
-        List<DonationDto> donationDtos = new ArrayList<>();
-
-        for (Donation donation : donationRepository.findAll()){
-            donationDtos.add(entityToDto(donation));
-        }
-        return donationDtos;
+        return objectMapper.convertAll(donationRepository.findAll(), DonationDto.class);
     }
 
     public Integer donationSum(){
