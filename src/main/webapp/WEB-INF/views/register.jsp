@@ -42,12 +42,16 @@
             <input type="password" id="pass2" placeholder="Powtórz hasło" />
             <span id='message'></span>
         </div>
-
+        
         <div class="form-group form-group--buttons">
             <a href="login.html" class="btn btn--without-border">Zaloguj się</a>
             <button class="btn" type="submit">Załóż konto</button>
         </div>
+
+        <input type="hidden" name="locale" value="${pageContext.response.locale}"
+
     </form:form>
+
 </section>
 
 <jsp:include page="footer.jsp"/>

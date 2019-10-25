@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <nav class="container container--70">
@@ -46,5 +47,8 @@
             <li><a href="/donate" class="btn btn--without-border">Przekaż dary</a></li>
         </sec:authorize>
         <li><a href="/#link4" class="btn btn--without-border">Kontakt</a></li>
+        <li><p class="btn btn--without-border"><a href="?lang=en">EN</a>|<a href="?lang=pl">PL</a></p></li>
+<%--        <li>ten tekst...: <spring:message code="app.title" text="default text" /></li>--%>
+        <li>Current Locale : ${pageContext.response.locale}</li>
     </ul>
 </nav>
