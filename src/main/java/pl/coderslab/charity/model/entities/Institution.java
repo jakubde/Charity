@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-
 @Getter
 @Setter
 @ToString
@@ -22,4 +21,5 @@ public class Institution extends BaseEntity {
 
     @NotBlank
     private String description;
+
 }

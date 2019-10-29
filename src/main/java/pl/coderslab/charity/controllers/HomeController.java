@@ -35,7 +35,6 @@ public class HomeController {
         model.addAttribute("institutions", institutionDtos);
         model.addAttribute("donationSum", donationSum);
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
-        System.out.println(System.getenv("SMTPPASS"));
         return "index";
     }
 }

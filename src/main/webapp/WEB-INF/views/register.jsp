@@ -33,6 +33,9 @@
         </div>
         <div class="form-group">
             <form:input path="email" type="email" placeholder="Email" />
+            <c:if test="${error.equals('userAlreadyExists')}">
+                <p style="color: red" >Użytkownik o adresie ${email} już isnieje. Wpisz inny email.</p>
+            </c:if>
         </div>
         <div class="form-group">
             <form:input path="password" id="pass1" type="password" placeholder="Hasło" /><form:errors path="password"/>

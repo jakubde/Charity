@@ -18,11 +18,16 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+//@NoArgsConstructor
 @Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
 public class User extends BaseEntity {
+
+    public User() {
+        super();
+        this.enabled=false;
+    }
 
     @NotBlank
     private String lastName;

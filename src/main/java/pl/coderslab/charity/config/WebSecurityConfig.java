@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/confirm-account").permitAll()
                 .antMatchers("/donate").authenticated()
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/logout").authenticated()
@@ -71,7 +72,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
     }
-
-
 
 }
