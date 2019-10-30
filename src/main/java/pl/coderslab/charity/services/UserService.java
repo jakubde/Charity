@@ -19,15 +19,17 @@ public class UserService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, VerificationTokenRepository verificationTokenRepository, ObjectMapper objectMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, VerificationTokenRepository verificationTokenRepository, ObjectMapper objectMapper, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.objectMapper = objectMapper;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
-    public User saveUser(UserDto userDto){
+    public User createNewAccount(UserDto userDto){
 
         userDto.setId(null);
         String encodedPassword = passwordEncoder.encode(userDto.getPassword());
@@ -43,7 +45,15 @@ public class UserService {
     }
 
     public UserDto findUserbyEmail(String email){
-        return objectMapper.convert(userRepository.findByEmail(email), UserDto.class);
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null){
+            return null;
+        }
+        else {
+            return objectMapper.convert(user, UserDto.class);
+        }
     }
 
     public UserDto findEnabledUserByEmail(String email){
@@ -72,5 +82,45 @@ public class UserService {
 
     public void deleteToken(VerificationToken verificationToken){
         verificationTokenRepository.delete(verificationToken);
+    }
+
+    public User dtoToEntity(UserDto userDto) {
+        return objectMapper.convert(userDto, User.class);
+    }
+
+    public void sendEmailConfirmationMailInAppropriateLanguage(String locale, UserDto userDto, VerificationToken verificationToken){
+
+        String subject = "";
+        String text = "";
+
+        if (locale.equals("pl")) {
+            subject = "Potwierdzenie rejestracji";
+
+            text = "Witaj " + userDto.getFirstName() + ",\n\n" +
+
+                    "Dziękujemy za rejestrację. Aby aktywować konto, kliknij następujący link:\n" +
+                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "\n\n" +
+
+                    "Zespół \"Oddam w dobre ręce\"\n\n" +
+
+                    "Pomagając innym, pomagamy sobie, bo wszystko, co dajemy, zatacza koło i wraca do nas.\n" +
+                    "~Flora Edwards";
+
+        }
+        if (locale.equals("en")) {
+            subject = "Registration confirmation";
+
+            text = "Hello " + userDto.getFirstName() + ",\n\n" +
+
+                    "Thank you for signing up. To activate the account click on the following link:" +
+                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "\n\n" +
+
+                    "\"Leave it in good hands\" team.\n\n" +
+
+                    "In helping others, we shall help ourselves, for whatever good we give out completes the circle and comes back to us.\n" +
+                    "~Flora Edwards";
+        }
+
+        emailService.sendSimpleMessage(userDto.getEmail(), subject, text);
     }
 }
