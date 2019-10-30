@@ -4,20 +4,22 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/miscellaneous.css"/>">
 </head>
 <body>
 <header>
     <jsp:include page="header.jsp"/>
 </header>
 
-<p>Dziękujemy, na adres <b>${email}</b> został wysłany link aktywujący konto. Link jest ważny przez 24 godziny.</p>
-<a href="/">Powrót do strony głównej</a>
-
+<div class="centering lowerdistance">
+    <h1>Dziękujemy, na adres <b>${email}</b> został wysłany link aktywujący konto. Link jest ważny przez 24 godziny.</h1><br>
+    <h1><a href="/">Powrót do strony głównej</a></h1>
+</div>
 
 <jsp:include page="footer.jsp"/>
 </body>

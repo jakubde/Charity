@@ -17,8 +17,9 @@
 </header>
 
 <div class="centering lowerdistance">
-    <h1>Konto zostało pomyślnie zweryfikowane.</h1><br>
-    <h1><a href="/">Powrót do strony głównej</a></h1>
+    <h2>Nieprawidłowy link powierdzający rejestrację. Zarejestruj konto ponownie, aby otrzymać nowy link.</h2>
+    <h1><a href="/register">Przejdź do rejestracji</a><br></h1>
+    <h1><a href="/">Wróć na stronę główną</a></h1>
 </div>
 
 <jsp:include page="footer.jsp"/>

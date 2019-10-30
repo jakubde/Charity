@@ -74,16 +74,16 @@ public class RegistrationController {
             final Calendar cal = Calendar.getInstance();
             if ((token.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
                 userService.deleteToken(token);
-                modelAndView.setViewName("verificationError");
+                modelAndView.setViewName("expiredTokenError");
             } else {
                 user.setEnabled(true);
                 userService.saveUser(user);
                 modelAndView.setViewName("accountVerified");
             }
         } else {
-            modelAndView.setViewName("verificationError");
+            modelAndView.setViewName("badTokenError");
         }
-        
+
         return modelAndView;
     }
 }
