@@ -19,7 +19,6 @@
       <h2>Zaloguj się</h2>
         <form method="post" action="/login">
         <div class="form-group">
-<%--          <input type="text" id="username" name="username" class="form-control" placeholder="Email" required autofocus>--%>
           <label for="username"></label>
           <input type="text" id="username" name="username" placeholder="Email" required autofocus/>
         </div>
@@ -41,7 +40,3 @@
 
   </body>
 </html>
-
-<%--post na strone glowną--%>
-<%--zrobic ifa czy jest parametr error--%>
-<%--testy zaczac od repozytorium--%>

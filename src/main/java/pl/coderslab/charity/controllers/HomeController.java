@@ -37,4 +37,9 @@ public class HomeController {
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
         return "index";
     }
+
+    @GetMapping("adminPanel")
+        public String adminPanel(){
+        return "admin/adminPanel";
+        }
 }

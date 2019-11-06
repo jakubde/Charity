@@ -19,7 +19,7 @@
                     <li><a href="#">Moje zbiórki</a></li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ADMIN')">
-                    <li><a href="/institutions">Zarządzaj zaufanymi instytucjami</a></li>
+                    <li><a href="/adminPanel">Panel admina</a></li>
                     </sec:authorize>
                     <li>
                         <form id="logout_form" method="post" action="/logout">
