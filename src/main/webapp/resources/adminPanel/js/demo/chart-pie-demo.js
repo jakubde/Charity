@@ -2,16 +2,36 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
+//Pie Chart Values
+var thisJsScript = $('script[src*=chart-pie-demo]');
+let pieChartValues = thisJsScript.attr('pieChartValues');
+pieChartValues = pieChartValues.replace("[","");
+pieChartValues = pieChartValues.replace("]","");
+let pieChartValuesArray = pieChartValues.split(", ");
+
+//Pie Chart Labels
+var thisJsScript = $('script[src*=chart-pie-demo]');
+let pieChartLabels = thisJsScript.attr('pieChartLabels');
+pieChartLabels = pieChartLabels.replace("[","");
+pieChartLabels = pieChartLabels.replace("]","");
+let pieChartLabelsArray = pieChartLabels.split(", ");
+
+console.log(pieChartLabels);
+console.log(pieChartValues);
+console.log(pieChartLabelsArray);
+console.log(pieChartValuesArray);
+
+
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: pieChartLabelsArray,
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+      data: pieChartValuesArray,
+      backgroundColor: ['#4e73df', '#36b9cc', '#1cc88a', '#ea2f00', '#F2D300'],
+      hoverBackgroundColor: ['#2e59d9', '#2c9faf', '#17a673', '#c32e00', '#C3A500'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },

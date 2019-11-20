@@ -11,4 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM users WHERE email = ?1 AND enabled = TRUE")
     User findEnabledByEmail(String email);
+
+    @Query(nativeQuery = true, value = "select count(user_id) from users WHERE enabled = TRUE")
+    Integer countAllUsers();
 }

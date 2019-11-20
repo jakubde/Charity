@@ -123,4 +123,8 @@ public class UserService {
 
         emailService.sendSimpleMessage(userDto.getEmail(), subject, text);
     }
+
+    public Integer countAllUsers(){
+        return userRepository.countAllUsers();
+    }
 }
