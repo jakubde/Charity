@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.model.dtos.InstitutionDto;
+import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.services.DonationService;
 import pl.coderslab.charity.services.InstitutionService;
 import pl.coderslab.charity.services.UserService;
@@ -53,9 +54,7 @@ public class HomeController {
         List<String> chartLabels = donationService.lastTwelveMonthsNames();
         List<String> pieChartLabels = donationService.pieChartLabels();
         List<Long> pieChartValues = donationService.pieChartValues();
-
-//        String as = pieChartLabels.toString().replaceAll("\"", "").replaceAll("“", "")
-//                .replaceAll("”", "");
+        List<UserDto> adminDtos = userService.findAllAdmins();
 
         model.addAttribute("donationSum", donationSum);
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
@@ -65,10 +64,6 @@ public class HomeController {
         model.addAttribute("chartLabels", chartLabels);
         model.addAttribute("pieChartLabels", pieChartLabels);
         model.addAttribute("pieChartValues", pieChartValues);
-
-        System.out.println(pieChartLabels);
-
-        System.out.println(pieChartValues);
 
         return "admin/adminPanel";
     }

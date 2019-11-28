@@ -11,6 +11,8 @@ import pl.coderslab.charity.model.repositories.UserRepository;
 import pl.coderslab.charity.model.repositories.VerificationTokenRepository;
 import pl.coderslab.charity.utils.ObjectMapper;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserService {
@@ -40,8 +42,28 @@ public class UserService {
         return userRepository.save(objectMapper.convert(userDto, User.class));
     }
 
+    public User createNewAdmin(UserDto userDto){
+
+        userDto.setId(null);
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodedPassword);
+        RoleDto roleAdmin = new RoleDto();
+        roleAdmin.setAuthority("ROLE_ADMIN");
+        userDto.getRoles().add(roleAdmin);
+        userDto.setEnabled(true);
+        return userRepository.save(objectMapper.convert(userDto, User.class));
+    }
+
     public void saveUser(User user){
         userRepository.save(user);
+    }
+
+    public void updateUserDto(Long id, UserDto updatedUserDto){
+        UserDto currentUser = objectMapper.convert(userRepository.findAllById(id), UserDto.class);
+        currentUser.setFirstName(updatedUserDto.getFirstName());
+        currentUser.setLastName(updatedUserDto.getLastName());
+        currentUser.setEmail(updatedUserDto.getEmail());
+        userRepository.save(objectMapper.convert(currentUser, User.class));
     }
 
     public UserDto findUserbyEmail(String email){
@@ -126,5 +148,18 @@ public class UserService {
 
     public Integer countAllUsers(){
         return userRepository.countAllUsers();
+    }
+
+    public List<UserDto> findAllAdmins() {
+        return objectMapper.convertAll(userRepository.findAllAdmins(), UserDto.class);
+    }
+
+    public UserDto findUserById(Long id){
+        return objectMapper.convert(userRepository.findAllById(id), UserDto.class);
+    }
+
+    public void deleteUser(Long id){
+        userRepository.deleteUserAuthorities(userRepository.findAllById(id).getEmail());
+        userRepository.deleteById(id);
     }
 }

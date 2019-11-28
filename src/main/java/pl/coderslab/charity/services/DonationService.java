@@ -160,7 +160,7 @@ public class DonationService {
 
         if(labels.size() > 5){
             labels.subList(4, labels.size()).clear();
-            labels.add("rest");
+            labels.add("Rest");
         }
         return labels;
     }
@@ -179,8 +179,6 @@ public class DonationService {
         }
         return values;
     }
-
-
 
     private static Map<Institution, Long> sortByComparator(Map<Institution, Long> unsortMap, final boolean order)
     {
