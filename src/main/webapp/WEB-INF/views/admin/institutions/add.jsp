@@ -1,33 +1,119 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Document</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/list.css"/>"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dodawanie instytucji</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="<c:url value="/resources/adminPanel/css/sb-admin-2.min.css"/>" rel="stylesheet">
+
 </head>
-<body>
-<header>
-    <jsp:include page="../../header.jsp"/>
-</header>
 
-<h2>Dodawanie instytucji</h2>
+<body id="page-top">
 
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-<form:form cssClass="mgmt-form" method="post" modelAttribute="institution">
-    <div class="mgmt-form">
-        <p>Nazwa: <form:input path="name"/></p>
+    <!-- Sidebar -->
+    <jsp:include page="../adminPanelSidebar.jsp"/>
 
-        <p>Opis: <form:textarea path="description"/></p>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-        <input type="submit" value="Dodaj"/>
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <jsp:include page="../adminPanelTopbar.jsp"/>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Content Row -->
+                <div class="row justify-content-md-center">
+
+                    <!-- First Column -->
+                    <div class="col-6">
+
+                        <!-- Custom Text Color Utilities -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Dodawanie instytucji</h6>
+                            </div>
+                            <div class="card-body">
+                                <form:form method="post" cssClass="user" modelAttribute="institutionDto" id="institutionForm">
+                                    <div class="form-group">
+                                        <form:input path="name" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nazwa"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="formTextarea">Opis</label>
+                                        <form:textarea path="description" cssClass="form-control rounded-0" id="formTextarea" rows="3"/>
+                                    </div>
+                                    <a href="javascript:{}" onclick="document.getElementById('institutionForm').submit();" class="btn btn-primary btn-user btn-block">
+                                        Zatwierdź
+                                    </a>
+                                </form:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <jsp:useBean id="date" class="java.util.Date"/>
+                        <span>Copyright &copy; Oddam w dobre ręce <fmt:formatDate value="${date}"
+                                                                                  pattern="yyyy"/></span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
     </div>
-</form:form>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <jsp:include page="../adminPanelLogoutModal.jsp"/>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../resources/adminPanel/vendor/jquery/jquery.min.js"></script>
+    <script src="../../resources/adminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../resources/adminPanel/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../resources/adminPanel/js/sb-admin-2.min.js"></script>
 
 </body>
+
 </html>

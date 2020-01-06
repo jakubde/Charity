@@ -60,12 +60,14 @@
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Akcja</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Akcja</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -73,13 +75,14 @@
                                     <tr>
                                         <td>${institutionDto.name}</td>
                                         <td>${institutionDto.description}</td>
+                                        <td style="text-align:center; white-space:nowrap"><a href="/institutions/edit/${institutionDto.id}">Edytuj</a>　|　<a href="#" data-href="/institutions/delete/${institutionDto.id}" data-toggle="modal" data-target="#deleteModal">Usuń</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <br/>
-                        <h6 class="text-right"><small><small>Generated with <a href="https://datatables.net/">DataTables</a></small></small></h6>
+                        <h6 class="text-right"><small><small>Generated with <a id="dataTablesSite" href="https://datatables.net/">DataTables</a></small></small></h6>
                     </div>
                 </div>
             </div>
@@ -113,6 +116,14 @@
 <!-- Logout Modal-->
 <jsp:include page="../adminPanelLogoutModal.jsp"/>
 
+<!-- Delete Modal-->
+<jsp:include page="../adminPanelDeleteModal.jsp"/>
+
+<p id="modalToggle" hidden>${dataViolationFlag}</p>
+
+<!-- Data Violation Modal-->
+<jsp:include page="dataViolationModal.jsp"/>
+
 <!-- Bootstrap core JavaScript-->
 <script src="../../../resources/adminPanel/vendor/jquery/jquery.min.js"></script>
 <script src="../../../resources/adminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -129,6 +140,10 @@
 
 <!-- Page level custom scripts -->
 <script src="../../../resources/adminPanel/js/demo/datatables-demo.js"></script>
+<script src="../../../resources/adminPanel/utils/js/deleteModal.js"></script>
+<script src="../../../resources/adminPanel/utils/js/dataViolationModal.js"></script>
+
+
 
 </body>
 </html>

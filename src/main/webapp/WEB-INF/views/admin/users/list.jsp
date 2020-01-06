@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Lista instytucji</title>
+    <title>Lista użytkowników</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
@@ -51,28 +51,43 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista instytucji</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Lista administratorów</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Email</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Enabled</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Email</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Enabled</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <c:forEach items="${institutionDtos}" var="institutionDto">
+                                <c:forEach items="${userDtos}" var="userDto">
                                     <tr>
-                                        <td>${institutionDto.name}</td>
-                                        <td>${institutionDto.description}</td>
+                                        <td>${userDto.email}</td>
+                                        <td>${userDto.firstName}</td>
+                                        <td>${userDto.lastName}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${userDto.enabled == true}">
+                                                    ✔
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ❌
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

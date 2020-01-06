@@ -3,6 +3,7 @@ package pl.coderslab.charity.services;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.charity.model.dtos.RoleDto;
 import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.model.entities.User;
@@ -31,6 +32,7 @@ public class UserService {
         this.emailService = emailService;
     }
 
+    //Methods for registering an account through a website
     public User createNewAccount(UserDto userDto){
 
         userDto.setId(null);
@@ -42,56 +44,8 @@ public class UserService {
         return userRepository.save(objectMapper.convert(userDto, User.class));
     }
 
-    public User createNewAdmin(UserDto userDto){
-
-        userDto.setId(null);
-        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-        userDto.setPassword(encodedPassword);
-        RoleDto roleAdmin = new RoleDto();
-        roleAdmin.setAuthority("ROLE_ADMIN");
-        userDto.getRoles().add(roleAdmin);
-        userDto.setEnabled(true);
-        return userRepository.save(objectMapper.convert(userDto, User.class));
-    }
-
     public void saveUser(User user){
         userRepository.save(user);
-    }
-
-    public void updateUserDto(Long id, UserDto updatedUserDto){
-        UserDto currentUser = objectMapper.convert(userRepository.findAllById(id), UserDto.class);
-        currentUser.setFirstName(updatedUserDto.getFirstName());
-        currentUser.setLastName(updatedUserDto.getLastName());
-        currentUser.setEmail(updatedUserDto.getEmail());
-        userRepository.save(objectMapper.convert(currentUser, User.class));
-    }
-
-    public UserDto findUserbyEmail(String email){
-
-        User user = userRepository.findByEmail(email);
-
-        if (user == null){
-            return null;
-        }
-        else {
-            return objectMapper.convert(user, UserDto.class);
-        }
-    }
-
-    public UserDto findEnabledUserByEmail(String email){
-
-        User user = userRepository.findEnabledByEmail(email);
-
-        if (user == null){
-            return null;
-        }
-        else {
-            return objectMapper.convert(user, UserDto.class);
-        }
-    }
-
-    public User getUser(String verificationToken) {
-        return verificationTokenRepository.findByToken(verificationToken).getUser();
     }
 
     public void saveToken (VerificationToken verificationToken){
@@ -106,8 +60,8 @@ public class UserService {
         verificationTokenRepository.delete(verificationToken);
     }
 
-    public User dtoToEntity(UserDto userDto) {
-        return objectMapper.convert(userDto, User.class);
+    public User getUser(String verificationToken) {
+        return verificationTokenRepository.findByToken(verificationToken).getUser();
     }
 
     public void sendEmailConfirmationMailInAppropriateLanguage(String locale, UserDto userDto, VerificationToken verificationToken){
@@ -146,12 +100,98 @@ public class UserService {
         emailService.sendSimpleMessage(userDto.getEmail(), subject, text);
     }
 
+
+    //Admin dashboard methods
     public Integer countAllUsers(){
         return userRepository.countAllUsers();
     }
 
+
+    //Users management methods
+    public void createNewUser(UserDto userDto){
+
+        userDto.setId(null);
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodedPassword);
+        RoleDto roleUser = new RoleDto();
+        roleUser.setAuthority("ROLE_USER");
+        userDto.getRoles().add(roleUser);
+        userRepository.save(objectMapper.convert(userDto, User.class));
+    }
+
+    public List<UserDto> findAllUsers() {
+        return objectMapper.convertAll(userRepository.findAllUsers(), UserDto.class);
+    }
+
+
+    //Admins management methods
+    public void createNewAdmin(UserDto userDto){
+
+        userDto.setId(null);
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodedPassword);
+        RoleDto roleAdmin = new RoleDto();
+        roleAdmin.setAuthority("ROLE_ADMIN");
+        userDto.getRoles().add(roleAdmin);
+        userDto.setEnabled(true);
+        userRepository.save(objectMapper.convert(userDto, User.class));
+    }
+
     public List<UserDto> findAllAdmins() {
         return objectMapper.convertAll(userRepository.findAllAdmins(), UserDto.class);
+    }
+
+    public ModelAndView deleteAdmin(Long id, String currentUserEmail){
+        ModelAndView modelAndView = new ModelAndView();
+        if(userRepository.findAllById(id).getEmail().equals(currentUserEmail)){
+            modelAndView.setViewName("admin/admins/selfDeleteError");
+        }
+        else {
+            modelAndView.setViewName("redirect:/admins/edit");
+            deleteUser(id);
+        }
+        return modelAndView;
+    }
+
+
+    //Utility methods
+    public void updateUserDto(Long id, UserDto updatedUserDto){
+
+        User currentUser = userRepository.findAllById(id);
+
+        currentUser.setFirstName(updatedUserDto.getFirstName());
+        currentUser.setLastName(updatedUserDto.getLastName());
+        currentUser.setEnabled(updatedUserDto.getEnabled());
+
+        userRepository.save(currentUser);
+    }
+
+    public UserDto findUserbyEmail(String email){
+
+        User user = userRepository.findByEmail(email);
+
+        if (user == null){
+            return null;
+        }
+        else {
+            return objectMapper.convert(user, UserDto.class);
+        }
+    }
+
+    public UserDto findEnabledUserByEmail(String email){
+
+        User user = userRepository.findEnabledByEmail(email);
+
+        if (user == null){
+            return null;
+        }
+        else {
+            return objectMapper.convert(user, UserDto.class);
+        }
+    }
+
+    public User dtoToEntity(UserDto userDto) {
+        return objectMapper.convert(userDto, User.class);
     }
 
     public UserDto findUserById(Long id){

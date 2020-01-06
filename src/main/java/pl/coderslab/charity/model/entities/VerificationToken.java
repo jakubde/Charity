@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 public class VerificationToken {
-    private static final int EXPIRATION = 1;//24 * 60;
+    private static final int EXPIRATION = 24 * 60;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

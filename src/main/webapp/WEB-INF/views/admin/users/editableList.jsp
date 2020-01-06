@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Lista instytucji</title>
+    <title>Lista użykowników</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
@@ -51,28 +51,46 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Lista instytucji</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Lista użytkowników</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Email</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Enabled</th>
+                                    <th>Akcja</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
+                                    <th>Email</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Enabled</th>
+                                    <th>Akcja</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <c:forEach items="${institutionDtos}" var="institutionDto">
+                                <c:forEach items="${userDtos}" var="userDto">
                                     <tr>
-                                        <td>${institutionDto.name}</td>
-                                        <td>${institutionDto.description}</td>
+                                        <td>${userDto.email}</td>
+                                        <td>${userDto.firstName}</td>
+                                        <td>${userDto.lastName}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${userDto.enabled == true}">
+                                                    ✔
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ❌
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td style="text-align:center; white-space:nowrap"><a href="/users/edit/${userDto.id}">Edytuj</a>　|　<a href="#" data-href="/users/delete/${userDto.id}" data-toggle="modal" data-target="#deleteModal">Usuń</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -113,6 +131,9 @@
 <!-- Logout Modal-->
 <jsp:include page="../adminPanelLogoutModal.jsp"/>
 
+<!-- Delete Modal-->
+<jsp:include page="../adminPanelDeleteModal.jsp"/>
+
 <!-- Bootstrap core JavaScript-->
 <script src="../../../resources/adminPanel/vendor/jquery/jquery.min.js"></script>
 <script src="../../../resources/adminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -129,6 +150,7 @@
 
 <!-- Page level custom scripts -->
 <script src="../../../resources/adminPanel/js/demo/datatables-demo.js"></script>
+<script src="../../../resources/adminPanel/utils/js/deleteModal.js"></script>
 
 </body>
 </html>

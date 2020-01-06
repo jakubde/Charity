@@ -31,6 +31,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String firstName = userDto.getFirstName();
 
         request.getSession().setAttribute("firstName", firstName);
+        request.getSession().setAttribute("email", email);
         response.sendRedirect("/");
     }
 }

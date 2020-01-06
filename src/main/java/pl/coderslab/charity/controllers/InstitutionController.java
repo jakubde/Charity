@@ -1,6 +1,6 @@
 package pl.coderslab.charity.controllers;
 
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,21 +21,20 @@ public class InstitutionController {
     }
 
     @GetMapping
-    public String prepareAllInstitutionsPage(Model model) {
-
-        model.addAttribute("institutions", institutionService.getList());
+    public String institutionsList(Model model) {
+        model.addAttribute("institutionDtos", institutionService.getList());
         return "/admin/institutions/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteInstitution(@PathVariable String id) {
-        institutionService.deleteInstitution(Long.parseLong(id));
-        return "redirect:/institutions";
+    @GetMapping("/edit")
+    public String institutionsEditableList(Model model) {
+        model.addAttribute("institutionDtos", institutionService.getList());
+        return "/admin/institutions/editableList";
     }
 
     @GetMapping("/add")
     public String prepareAddInstitutionPage(Model model) {
-        model.addAttribute("institution", new InstitutionDto());
+        model.addAttribute("institutionDto", new InstitutionDto());
         return "admin/institutions/add";
     }
 
@@ -48,32 +47,28 @@ public class InstitutionController {
     @GetMapping("/edit/{id}")
     public String prepareEditInstitutionPage(@PathVariable String id, Model model) {
         InstitutionDto editedInstitution = institutionService.findById(Long.parseLong(id));
-        model.addAttribute("institution", editedInstitution);
-        if (editedInstitution == null) {
-            return "institutions/edit/{id}";
-        }
-        return "admin/institutions/add";
+        model.addAttribute("institutionDto", editedInstitution);
+        return "admin/institutions/edit";
     }
 
     @PostMapping("edit/{id}")
     public String processEditInstitutionPage(InstitutionDto institutionDto) {
 
-        if (institutionDto.getId() != null) {
+        //if (institutionDto.getId() != null) {
             institutionService.saveInstitution(institutionDto);
-        }
-        return "redirect:/institutions";
+        //}
+        return "redirect:/institutions/edit";
     }
 
-
-    //    @PostMapping
-    //    public String processEditLicence(Licence licence, BindingResult result) {
-    //        if(result.hasErrors()){
-    //            return "admin/licences/add";
-    //        }
-    //        if(licence.getId() != null){
-    //            licenceRepository.save(licence);
-    //        }
-    //        return "redirect:/licences";
-    //    }
-
+    @GetMapping("/delete/{id}")
+    public String deleteInstitution(@PathVariable String id, Model model) {
+        try {
+            institutionService.deleteInstitution(Long.parseLong(id));
+        } catch (DataIntegrityViolationException e){
+            model.addAttribute("dataViolationFlag", "error");
+            model.addAttribute("institutionDtos", institutionService.getList());
+            return "/admin/institutions/editableList";
+        }
+        return "redirect:/institutions/edit";
+    }
 }

@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edycja admina</title>
+    <title>Edycja instytucji</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
@@ -55,17 +55,18 @@
                         <!-- Custom Text Color Utilities -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Edycja admina</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Edycja instytucji</h6>
                             </div>
                             <div class="card-body">
-                                <form:form method="post" cssClass="user" modelAttribute="admin" id="adminForm">
+                                <form:form method="post" cssClass="user" modelAttribute="institutionDto" id="institutionForm">
                                     <div class="form-group">
-                                        <form:input path="firstName" type="text" class="form-control form-control-user" id="exampleInputFirstName" placeholder="Imię"/>
+                                        <form:input path="name" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nazwa"/>
                                     </div>
                                     <div class="form-group">
-                                        <form:input path="lastName" type="text" class="form-control form-control-user" id="exampleInputLastName" placeholder="Nazwisko"/>
+                                        <label for="formTextarea">Opis</label>
+                                        <form:textarea path="description" cssClass="form-control rounded-0" id="formTextarea" rows="3"/>
                                     </div>
-                                    <a href="javascript:{}" onclick="document.getElementById('adminForm').submit();" class="btn btn-primary btn-user btn-block">
+                                    <a href="javascript:{}" onclick="document.getElementById('institutionForm').submit();" class="btn btn-primary btn-user btn-block">
                                         Zatwierdź
                                     </a>
                                 </form:form>
@@ -73,6 +74,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -113,4 +115,5 @@
     <script src="../../resources/adminPanel/js/sb-admin-2.min.js"></script>
 
 </body>
+
 </html>

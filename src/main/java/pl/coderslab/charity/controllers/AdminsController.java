@@ -4,9 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -27,7 +29,7 @@ public class AdminsController {
     }
 
     @GetMapping("/edit")
-    public String editableAdminList(Model model){
+    public String editableAdminsList(Model model){
         List<UserDto> adminDtos = userService.findAllAdmins();
         model.addAttribute("adminDtos", adminDtos);
         return "admin/admins/editableList";
@@ -63,8 +65,7 @@ public class AdminsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteAdmin(@PathVariable String id){
-        userService.deleteUser(Long.parseLong(id));
-        return "redirect:/admins/edit";
+    public ModelAndView deleteAdmin(@PathVariable String id, HttpServletRequest request){
+        return userService.deleteAdmin(Long.parseLong(id), request.getSession().getAttribute("email").toString());
     }
 }

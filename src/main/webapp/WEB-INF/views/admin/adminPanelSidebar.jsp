@@ -40,11 +40,11 @@
         </a>
         <div id="collapseInstitutions" class="collapse" aria-labelledby="headingInstitutions" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/buttons.html"/>">Lista
+                <a class="collapse-item" href="<c:url value="/institutions"/>">Lista
                     instytucji</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/buttons.html"/>">Dodaj
+                <a class="collapse-item" href="<c:url value="/institutions/add"/>">Dodaj
                     instytucję</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/cards.html"/>">Edytuj/Usuń
+                <a class="collapse-item" href="<c:url value="/institutions/edit"/>">Edytuj/Usuń
                     instytucję</a>
             </div>
         </div>
@@ -99,11 +99,11 @@
         </a>
         <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-color.html"/>">Lista
+                <a class="collapse-item" href="<c:url value="/users"/>">Lista
                     użytkowników</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-border.html"/>">Dodaj
+                <a class="collapse-item" href="<c:url value="/users/add"/>">Dodaj
                     użytkownika</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-animation.html"/>">Edytuj/Usuń
+                <a class="collapse-item" href="<c:url value="/users/edit"/>">Edytuj/Usuń
                     użytkownika</a>
             </div>
         </div>

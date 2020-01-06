@@ -21,6 +21,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(nativeQuery = true, value = "select * from users INNER join user_authorities ON users.email = user_authorities.email WHERE authority LIKE 'ROLE_ADMIN'")
     List<User> findAllAdmins();
 
+    @Query(nativeQuery = true, value = "select * from users INNER join user_authorities ON users.email = user_authorities.email WHERE authority LIKE 'ROLE_USER'")
+    List<User> findAllUsers();
+
     User findAllById(Long id);
 
     @Query(nativeQuery = true, value = "DELETE FROM user_authorities where email = ?1")

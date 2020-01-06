@@ -78,7 +78,7 @@
                                         <td>${adminDto.email}</td>
                                         <td>${adminDto.firstName}</td>
                                         <td>${adminDto.lastName}</td>
-                                        <td style="text-align:center;"><a href="/admins/edit/${adminDto.id}">Edytuj</a>　|　<a href="#" data-href="/admins/delete/${adminDto.id}" data-toggle="modal" data-target="#deleteModal">Usuń</a></td>
+                                        <td style="text-align:center; white-space:nowrap"><a href="/admins/edit/${adminDto.id}">Edytuj</a>　|　<a href="#" data-href="/admins/delete/${adminDto.id}" data-toggle="modal" data-target="#deleteModal">Usuń</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

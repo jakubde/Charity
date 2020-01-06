@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edycja admina</title>
+    <title>Edycja użytkownika</title>
 
     <!-- Custom fonts for this template-->
     <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
@@ -55,17 +55,24 @@
                         <!-- Custom Text Color Utilities -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Edycja admina</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Edycja użytkownika</h6>
                             </div>
                             <div class="card-body">
-                                <form:form method="post" cssClass="user" modelAttribute="admin" id="adminForm">
+                                <form:form method="post" cssClass="user" modelAttribute="userDto" id="userForm">
                                     <div class="form-group">
                                         <form:input path="firstName" type="text" class="form-control form-control-user" id="exampleInputFirstName" placeholder="Imię"/>
                                     </div>
                                     <div class="form-group">
                                         <form:input path="lastName" type="text" class="form-control form-control-user" id="exampleInputLastName" placeholder="Nazwisko"/>
                                     </div>
-                                    <a href="javascript:{}" onclick="document.getElementById('adminForm').submit();" class="btn btn-primary btn-user btn-block">
+                                    Enabled:
+                                    <div class="form-group text-center">
+                                        <form:select path="enabled" cssClass="custom-select">
+                                            <form:option value="true"/>
+                                            <form:option value="false"/>
+                                        </form:select>
+                                    </div>
+                                    <a href="javascript:{}" onclick="document.getElementById('userForm').submit();" class="btn btn-primary btn-user btn-block">
                                         Zatwierdź
                                     </a>
                                 </form:form>
