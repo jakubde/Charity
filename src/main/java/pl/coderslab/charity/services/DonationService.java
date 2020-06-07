@@ -3,10 +3,11 @@ package pl.coderslab.charity.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.charity.model.dtos.DonationDto;
+import pl.coderslab.charity.model.entities.Category;
 import pl.coderslab.charity.model.entities.Donation;
+import pl.coderslab.charity.model.entities.DonationStatus;
 import pl.coderslab.charity.model.entities.Institution;
-import pl.coderslab.charity.model.repositories.DonationRepository;
-import pl.coderslab.charity.model.repositories.InstitutionRepository;
+import pl.coderslab.charity.model.repositories.*;
 import pl.coderslab.charity.utils.ObjectMapper;
 
 import java.sql.Timestamp;
@@ -23,73 +24,151 @@ import java.util.stream.Collectors;
 public class DonationService {
 
     private static final boolean DESC = false;
+    private final DonationStatusRepository donationStatusRepository;
     private final InstitutionRepository institutionRepository;
     private final DonationRepository donationRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
 
-    public DonationService(InstitutionRepository institutionRepository, DonationRepository donationRepository, ObjectMapper objectMapper) {
+    public DonationService(DonationStatusRepository donationStatusRepository, InstitutionRepository institutionRepository, DonationRepository donationRepository, CategoryRepository categoryRepository, UserRepository userRepository, ObjectMapper objectMapper) {
+        this.donationStatusRepository = donationStatusRepository;
         this.institutionRepository = institutionRepository;
         this.donationRepository = donationRepository;
+        this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
         this.objectMapper = objectMapper;
     }
 
-    public void saveDonation(DonationDto donationDto){
-        donationRepository.save(objectMapper.convert(donationDto, Donation.class));
+    public void saveDonation(DonationDto donationDto) {
+        donationDto.setDonationStatusId(1L);
+        Donation donation = objectMapper.convert(donationDto, Donation.class);
+        List<Category> categoryList = new ArrayList<>();
+        for (Long categoryId : donationDto.getCategoryIdList()) {
+            categoryList.add(categoryRepository.findAllById(categoryId));
+        }
+        donation.setCategories(categoryList);
+        donationRepository.save(donation);
     }
 
     public void deleteDonation(Long id) {
+        donationRepository.deleteRelatedDataFromDonationCategoryTable(id);
         donationRepository.deleteById(id);
     }
 
-    public List<DonationDto> getList(){
-        return objectMapper.convertAll(donationRepository.findAll(), DonationDto.class);
+    public List<DonationDto> getList() {
+        List<DonationDto> donationDtoList = objectMapper.convertAll(donationRepository.findAll(), DonationDto.class);
+
+        for (DonationDto donationDto : donationDtoList) {
+            donationDto.setCategoryIdList(donationRepository.findAllCategoryIdsByDonationId(donationDto.getId()));
+        }
+
+        return donationDtoList;
     }
 
-    public Integer donationSum(){
-        return donationRepository.sumAllDonations();
+    public Integer donationSum() {
+
+        if (donationRepository.sumAllDonations() == null) {
+            return 0;
+        } else {
+            return donationRepository.sumAllDonations();
+        }
     }
 
-    public int distinctInstitutionsCount(){
+    public int distinctInstitutionsCount() {
         return donationRepository.countAllDistinctInstitutions();
     }
 
     public Double getDonationsPerDay() throws ParseException {
+
+        if (donationRepository.firstDonationDate() == null) {
+            return null;
+        }
 
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
         Date currentDate = new Date(currentTimestamp.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date firstDonationDate = sdf.parse(donationRepository.firstDonationDate());
 
-        long differenceInDays = ChronoUnit.DAYS.between(firstDonationDate.toInstant(),currentDate.toInstant());
-        double donationsPerDay = 1.0 * donationSum()/differenceInDays;
+        long differenceInDays = ChronoUnit.DAYS.between(firstDonationDate.toInstant(), currentDate.toInstant());
+        double donationsPerDay = 1.0 * donationSum() / differenceInDays;
         double donationsPerDayRounded = Math.round(donationsPerDay * 10) / 10.0;
 
         return donationsPerDayRounded;
     }
 
-    public List<String> donationsSumsInLastTwelveMonths(){
-
-        LocalDate date = LocalDate.now();
+    public List<String> donationsSumsInLastTwelveMonths() {
+        LocalDate currentDate = LocalDate.now();
         List<String> sumsInLastTwelveMonthsList = new ArrayList<>();
 
         Integer totalDonations = donationSum();
 
-        for (int i = 11; i >= 0; i--) {
-            String currentDateWithoutIMonths = date.minusMonths(i).toString();
-            Integer donationsToSubtract = donationRepository.sumDonationsWhereDateComesAfter(currentDateWithoutIMonths);
-            if(donationsToSubtract == null){
-                donationsToSubtract = 0;
+        for (int i = 0; i < 12; i++) {
+            String lastDayOfSpecificMonth;
+            if (currentDate.getMonth().getValue() - i < 1) {
+                lastDayOfSpecificMonth = currentDate
+                        .withDayOfMonth(currentDate.withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i)).getMonth().maxLength())
+                        .withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i))
+                        .withYear(currentDate.getYear() - 1)
+                        .toString();
+            } else {
+                lastDayOfSpecificMonth = currentDate
+                        .withDayOfMonth(currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().maxLength())
+                        .withMonth(currentDate.getMonth().getValue() - i).toString();
+            }
+            System.out.println(lastDayOfSpecificMonth);
+            Integer bagsNumber = donationRepository.sumDonationsWhereDateComesBefore(lastDayOfSpecificMonth);
+            if (bagsNumber == null) {
+                bagsNumber = 0;
             }
 
-            sumsInLastTwelveMonthsList.add("" + (totalDonations - donationsToSubtract));
+            sumsInLastTwelveMonthsList.add("" + bagsNumber);
         }
+        Collections.reverse(sumsInLastTwelveMonthsList);
         return sumsInLastTwelveMonthsList;
     }
 
-    //Add an attribute(String) passed to the method that specifies the locale.
-    public List<String> lastTwelveMonthsNames(){
+    public List<String> donationsInLastTwelveMonths() {
+        List<String> donationsInTheLastTwelveMonthsList = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonth().getValue();
 
-        DateFormatSymbols dfs = new DateFormatSymbols(new Locale("pl"));
+        for (int i = 0; i < 12; i++) {
+
+            int monthToCheck = currentMonth - i;
+            String monthToCheckString;
+            int yearToCheck;
+
+            if (monthToCheck > 0) {
+                yearToCheck = currentYear;
+            } else {
+                yearToCheck = currentYear - 1;
+                monthToCheck += 12;
+            }
+
+            if (monthToCheck < 10) {
+                monthToCheckString = "0" + monthToCheck;
+            } else {
+                monthToCheckString = "" + monthToCheck;
+            }
+
+            String dateToQueryInRepository = yearToCheck + "-" + monthToCheckString;
+
+            String donationsInSpecificMonth = donationRepository.getDonationsSumInGivenMonth(dateToQueryInRepository);
+            if (donationsInSpecificMonth == null) {
+                donationsInSpecificMonth = "0";
+            }
+
+            donationsInTheLastTwelveMonthsList.add(donationsInSpecificMonth);
+        }
+        Collections.reverse(donationsInTheLastTwelveMonthsList);
+        return donationsInTheLastTwelveMonthsList;
+    }
+
+    public List<String> lastTwelveMonthsNames(Locale locale) {
+
+        DateFormatSymbols dfs = new DateFormatSymbols(locale);
         String[] shortMonths = dfs.getShortMonths();
 
         List<String> shortMonthsList = new ArrayList<>(Arrays.asList(shortMonths));
@@ -98,16 +177,16 @@ public class DonationService {
         //Capitalization of the first letters of months
         shortMonthsList = shortMonthsList.stream()
                 .map(s -> {
-            char firstChar = s.charAt(0);
-            String firstLetter = ("" + firstChar).toUpperCase();
-            String otherLetters = s.substring(1);
-            return firstLetter + otherLetters;
-        }).collect(Collectors.toList());
+                    char firstChar = s.charAt(0);
+                    String firstLetter = ("" + firstChar).toUpperCase();
+                    String otherLetters = s.substring(1);
+                    return firstLetter + otherLetters;
+                }).collect(Collectors.toList());
 
         String currentMonth = LocalDate.now().toString();
         int year = LocalDate.now().getYear();
-        String yearlastTwoChars = ("" + year).substring(2);
-        year = Integer.parseInt(yearlastTwoChars) - 1;
+        String yearLastTwoChars = ("" + year).substring(2);
+        year = Integer.parseInt(yearLastTwoChars) - 1;
         char[] dateCharactersArray = currentMonth.toCharArray();
         currentMonth = "" + dateCharactersArray[5] + dateCharactersArray[6];
         int index = Integer.parseInt(currentMonth) - 1;
@@ -115,7 +194,7 @@ public class DonationService {
 
         for (int i = 0; i < 12; i++) {
             index++;
-            if(index > 11){
+            if (index > 11) {
                 index = 0;
                 year += 1;
             }
@@ -125,22 +204,21 @@ public class DonationService {
         return chartLabels;
     }
 
-    public Map<Institution, Long> sumOfDonationsPerInstitution(){
+    public Map<Institution, Long> sumOfDonationsPerInstitution() {
 
         List<Institution> institutions = institutionRepository.findAll();
         List<Long> donationsPerInstitution = new ArrayList<>();
 
-        for(Institution institution : institutions){
+        for (Institution institution : institutions) {
 
             Integer sumOfDonations;
-            if(donationRepository.sumOfDonationsPerInstitution(institution.getId()) == null){
+            if (donationRepository.sumOfDonationsPerInstitution(institution.getId()) == null) {
                 sumOfDonations = 0;
-            }
-            else {
+            } else {
                 sumOfDonations = donationRepository.sumOfDonationsPerInstitution(institution.getId());
             }
 
-           donationsPerInstitution.add(Long.valueOf(sumOfDonations));
+            donationsPerInstitution.add(Long.valueOf(sumOfDonations));
         }
 
         HashMap<Institution, Long> institutionsWithDonations = new HashMap<>();
@@ -152,26 +230,25 @@ public class DonationService {
         return sortByComparator(institutionsWithDonations, DESC);
     }
 
-    //Add locale to give the name to the last element of list
-    public List<String> pieChartLabels(){
+    public List<String> chartLabels(String otherInstitutionsLabelInCorrectLang) {
         List<Institution> institutionList = new ArrayList<>(sumOfDonationsPerInstitution().keySet());
 
-        List<String> labels = institutionList.stream().map(Institution::getName).map(s->s.replaceAll("\"", "'")).collect(Collectors.toList());
+        List<String> labels = institutionList.stream().map(Institution::getName).map(s -> s.replaceAll("\"", "'")).collect(Collectors.toList());
 
-        if(labels.size() > 5){
+        if (labels.size() > 5) {
             labels.subList(4, labels.size()).clear();
-            labels.add("Rest");
+            labels.add(otherInstitutionsLabelInCorrectLang);
         }
         return labels;
     }
 
-    public List<Long> pieChartValues(){
+    public List<Long> pieChartValues() {
         List<Long> values = new ArrayList<>(sumOfDonationsPerInstitution().values());
-        if(values.size() > 5){
+        if (values.size() > 5) {
 
             Long sumOfOtherInstitutionsValues = 0L;
 
-            for (int i = 4; i < values.size(); i++){
+            for (int i = 4; i < values.size(); i++) {
                 sumOfOtherInstitutionsValues += values.get(i);
             }
             values.subList(4, values.size()).clear();
@@ -180,9 +257,8 @@ public class DonationService {
         return values;
     }
 
-    private static Map<Institution, Long> sortByComparator(Map<Institution, Long> unsortMap, final boolean order)
-    {
-        List<Map.Entry<Institution, Long>> list = new LinkedList<>(unsortMap.entrySet());
+    private static Map<Institution, Long> sortByComparator(Map<Institution, Long> unsortedMap, final boolean order) {
+        List<Map.Entry<Institution, Long>> list = new LinkedList<>(unsortedMap.entrySet());
         list.sort((o1, o2) -> {
             if (order) {
                 return o1.getValue().compareTo(o2.getValue());
@@ -193,10 +269,68 @@ public class DonationService {
         });
 
         Map<Institution, Long> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<Institution, Long> entry : list)
-        {
+        for (Map.Entry<Institution, Long> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
+    }
+
+    public Long getUserIdByEmail(String email) {
+        return userRepository.findByEmail(email).getId();
+    }
+
+    public Map<Long, String> getCategoryMap() {
+        Map<Long, String> categoryMap = new HashMap<>();
+        for (Category category : categoryRepository.findAll()) {
+            categoryMap.put(category.getId(), category.getName());
+        }
+        return categoryMap;
+    }
+
+    public Map<Long, String> getInstitutionMap() {
+        Map<Long, String> institutionMap = new HashMap<>();
+        for (Institution institution : institutionRepository.findAll()) {
+            //replacing double quote symbol with its HTML code to properly display institution names in views
+            institutionMap.put(institution.getId(), institution.getName().replace("\"", "&quot;"));
+
+        }
+        return institutionMap;
+    }
+
+    public Map<Long, String> getDonationStatusMap() {
+        Map<Long, String> donationStatusMap = new HashMap<>();
+        for (DonationStatus donationStatus : donationStatusRepository.findAll()) {
+            donationStatusMap.put(donationStatus.getId(), donationStatus.getName());
+        }
+        return donationStatusMap;
+    }
+
+    public void createDonation(String userEmail, String categoryIdListAsString, String institutionName, Long statusId, DonationDto donationDto) {
+        donationDto.setInstitutionId(getInstitutionIdByName(institutionName));
+        donationDto.setDonationStatusId(statusId);
+        Donation donation = objectMapper.convert(donationDto, Donation.class);
+        donation.setUser(userRepository.findByEmail(userEmail));
+
+        List<Category> categoryList = Arrays.stream(categoryIdListAsString.split(",")).map(x -> categoryRepository.findAllById(Long.parseLong(x))).collect(Collectors.toList());
+        donation.setCategories(categoryList);
+
+        donationRepository.save(donation);
+    }
+
+    public DonationDto findDonationById(Long id) {
+        DonationDto donationDto = objectMapper.convert(donationRepository.findAllById(id), DonationDto.class);
+        donationDto.setCategoryIdList(donationRepository.findAllCategoryIdsByDonationId(donationDto.getId()));
+        return donationDto;
+    }
+
+    public Long getInstitutionIdByName(String name) {
+        return institutionRepository.getIdByName(name);
+    }
+
+    public void changeDonationStatus(Long donationId, Long donationStatusId) {
+        Donation donation = donationRepository.findAllById(donationId);
+        DonationStatus donationStatus = donationStatusRepository.findAllById(donationStatusId);
+        donation.setDonationStatus(donationStatus);
+        donationRepository.save(donation);
     }
 }

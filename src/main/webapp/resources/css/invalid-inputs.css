@@ -1,0 +1,18 @@
+div.row > div.column-center > div > div > div > label > input.invalid-input {
+    border: 1px solid red;
+    display: block;
+}
+
+span.invalid-input {
+    color: red;
+    font-size: larger;
+}
+
+section.login-page > form > div.form-group > input.invalid-input {
+    border: 1px solid red;
+    display: block;
+}
+
+div.invalid-input {
+    margin: 3px;
+}

@@ -1,7 +1,47 @@
-div.centering{
+div.centering {
     text-align: center;
 }
 
-div.lowerdistance{
-    margin-bottom: 100px;
+div.space-bottom-top {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.border-padded-a {
+    border: 1px solid;
+    padding: 8px 16px;
+}
+
+section.login-page form div.inline-form-divs {
+    width: auto;
+    margin: auto;
+    padding-bottom: 100px;
+}
+
+div.row {
+    width: 60%;
+    margin: auto;
+    /*transform: translate(100%, 0%)*/
+}
+
+div.column-center {
+    text-align: center;
+    display: inline-block
+}
+
+div.column-padding {
+    /*padding-right: 81%;*/
+    /*padding-left: 81%;*/
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+div.column {
+    width: fit-content;
+    display: inline;
+    float: left;
+}
+
+div.row > div.column-center > div > div > div > label > input.wide-input {
+    max-width: none;
 }

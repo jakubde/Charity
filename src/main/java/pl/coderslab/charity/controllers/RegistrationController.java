@@ -1,16 +1,18 @@
 package pl.coderslab.charity.controllers;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-
 import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.model.entities.User;
 import pl.coderslab.charity.model.entities.VerificationToken;
 import pl.coderslab.charity.services.UserService;
 
+import javax.validation.Valid;
 import java.util.Calendar;
 
 @Controller
@@ -24,64 +26,42 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public String prepareAddUser(Model model) {
-
-        model.addAttribute("user", new UserDto());
-        model.addAttribute("locale", "pl");
-        model.addAttribute("error", "");
-
-        return "register";
+        model.addAttribute("userDto", new UserDto());
+        return "registration/register";
     }
 
     @PostMapping("/register")
-    public ModelAndView processAddUser(
-            UserDto userDto,
-            String locale) {
+    public ModelAndView processAddUser(@Valid UserDto userDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("/registration/register");
+            return modelAndView;
+        } else {
+            userService.createNewUser(userDto);
+            userService.sendRegistrationEmailWithToken(LocaleContextHolder.getLocale(), userDto);
 
-        if (userService.findEnabledUserByEmail(userDto.getEmail()) != null) {
-            ModelAndView modelAndView = new ModelAndView("/register");
-            userDto.setPassword(null);
-            modelAndView.addObject("user", userDto);
-            modelAndView.addObject("locale", locale);
-            modelAndView.addObject("error", "userAlreadyExists");
+            ModelAndView modelAndView = new ModelAndView("registration/successfulRegistration");
+            modelAndView.addObject("email", userDto.getEmail());
             return modelAndView;
         }
-
-        VerificationToken verificationToken;
-
-        if (userService.findUserbyEmail(userDto.getEmail()) != null) {
-            verificationToken = new VerificationToken(userService.dtoToEntity(userService.findUserbyEmail(userDto.getEmail())));
-        }
-        else {
-            verificationToken = new VerificationToken(userService.createNewAccount(userDto));
-        }
-
-        userService.saveToken(verificationToken);
-
-        userService.sendEmailConfirmationMailInAppropriateLanguage(locale, userDto, verificationToken);
-
-        ModelAndView modelAndView = new ModelAndView("/successfulRegistration");
-        modelAndView.addObject("email", userDto.getEmail());
-
-        return modelAndView;
     }
 
     @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
-        VerificationToken token = userService.findVerificationToken(confirmationToken);
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String token) {
+        VerificationToken verificationToken = userService.findVerificationToken(token);
 
-        if (token != null) {
-            final User user = userService.getUser(token.getToken());
+        if (verificationToken != null) {
+            final User user = userService.getUserByVerificationToken(verificationToken.getToken());
             final Calendar cal = Calendar.getInstance();
-            if ((token.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-                userService.deleteToken(token);
-                modelAndView.setViewName("expiredTokenError");
+            if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+                userService.deleteVerificationToken(verificationToken);
+                modelAndView.setViewName("registration/expiredVerificationTokenError");
             } else {
                 user.setEnabled(true);
                 userService.saveUser(user);
-                modelAndView.setViewName("accountVerified");
+                modelAndView.setViewName("registration/accountVerified");
             }
         } else {
-            modelAndView.setViewName("badTokenError");
+            modelAndView.setViewName("registration/badVerificationTokenError");
         }
 
         return modelAndView;

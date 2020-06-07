@@ -1,32 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kuba
-  Date: 05.10.19
-  Time: 02:20
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- TODO - i18n --%>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Przekaż dary</title>
+    <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
+
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
 <header class="header--form-page">
-
     <jsp:include page="header.jsp"/>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
-                Oddaj rzeczy, których już nie chcesz<br />
+                Oddaj rzeczy, których już nie chcesz<br/>
                 <span class="uppercase">potrzebującym</span>
             </h1>
 
@@ -74,27 +69,26 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-            <form:form method="post" modelAttribute="donation">
+        <form:form method="post" modelAttribute="donation">
 
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
 
                 <c:forEach items="${categories}" var="category">
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <form:checkbox path="categoryIds" cssClass="auxiliary" value="${category.id}"/>
-<%--                    Javascript insert <span class="checkbox"></span>                        --%>
-                        <span class="description"> ${category.name} </span>
-                    </label>
-                </div>
+                    <div class="form-group form-group--checkbox">
+                        <label>
+                            <form:checkbox path="categoryIdList" cssClass="auxiliary" value="${category.id}"/>
+                                <%--                    Javascript insert <span class="checkbox"></span>                        --%>
+                            <span class="description"> ${category.name} </span>
+                        </label>
+                    </div>
                 </c:forEach>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step">Dalej</button>
                 </div>
             </div>
-
 
             <!-- STEP 2 -->
             <div data-step="2">
@@ -113,22 +107,21 @@
                 </div>
             </div>
 
-
             <!-- STEP 3 -->
             <div data-step="3">
                 <h3>Wybierz organizację, której chcesz pomóc:</h3>
 
                 <c:forEach items="${institutions}" var="institution">
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <form:radiobutton path="institutionId" value="${institution.id}"/>
-                        <span class="checkbox radio"></span>
-                        <span class="description">
+                    <div class="form-group form-group--checkbox">
+                        <label>
+                            <form:radiobutton path="institutionId" value="${institution.id}"/>
+                            <span class="checkbox radio"></span>
+                            <span class="description">
                   <div class="title">${institution.name}</div>
                   <div class="subtitle">${institution.description}</div>
                 </span>
-                    </label>
-                </div>
+                        </label>
+                    </div>
                 </c:forEach>
 
                 <div class="form-group form-group--buttons">
@@ -136,7 +129,6 @@
                     <button type="button" class="btn next-step">Dalej</button>
                 </div>
             </div>
-
 
             <!-- STEP 4 -->
             <div data-step="4">
@@ -147,12 +139,12 @@
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
                             <label> Ulica
-                                <form:input path="street"/>
+                                    <form:input path="street"/>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label> Miasto
-                                <form:input path="city"/>
+                                    <form:input path="city"/>
                         </div>
 
                         <div class="form-group form-group--inline">
@@ -246,13 +238,20 @@
                     <button type="submit" class="btn">Potwierdzam</button>
                 </div>
             </div>
-            </form:form>
+        </form:form>
     </div>
 </section>
 
 <jsp:include page="footer.jsp"/>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="../../resources/js/app.js"></script>
+<%-- jQuery and local fallback--%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script>
+    if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='<c:url value="/resources/adminPanel/vendor/jquery/jquery.min.js"/>'%3E%3C/script%3E"));
+    }
+</script>
+
+<script src="<c:url value="/resources/js/app.js"/>"></script>
 </body>
 </html>

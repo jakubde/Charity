@@ -2,7 +2,6 @@ package pl.coderslab.charity.model.entities;
 
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.coderslab.charity.model.entities.embeddable.Role;
@@ -18,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-//@NoArgsConstructor
 @Entity
 @Table(name = "users")
 @AttributeOverride(name = "id", column = @Column(name = "user_id"))
@@ -26,7 +24,7 @@ public class User extends BaseEntity {
 
     public User() {
         super();
-        this.enabled=false;
+        this.enabled = false;
     }
 
     @NotBlank
@@ -40,7 +38,6 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Size(min = 8)
     @NotBlank
     private String password;
 

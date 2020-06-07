@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public WebSecurityConfig(DataSource dataSource, CustomAuthenticationSuccessHandler successHandler) {
         this.dataSource = dataSource;
@@ -50,9 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/confirm-account").permitAll()
                 .antMatchers("/donate").authenticated()
-                .antMatchers("/login*").permitAll()
+                .antMatchers("/login*").anonymous()
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/register").anonymous()
+                .antMatchers("/password-reset/**").anonymous()
                 .antMatchers("/adminPanel").hasRole("ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -71,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(final WebSecurity web) throws Exception {
+    public void configure(final WebSecurity web) {
         web.ignoring().antMatchers("/resources/**");
     }
 

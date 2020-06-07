@@ -1,19 +1,20 @@
 package pl.coderslab.charity.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.model.dtos.InstitutionDto;
-import pl.coderslab.charity.model.dtos.UserDto;
 import pl.coderslab.charity.services.DonationService;
 import pl.coderslab.charity.services.InstitutionService;
 import pl.coderslab.charity.services.UserService;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -23,17 +24,19 @@ public class HomeController {
     private final InstitutionService institutionService;
     private final DonationService donationService;
     private final UserService userService;
+    private final MessageSource messageSource;
 
-    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService) {
+    public HomeController(InstitutionService institutionService, DonationService donationService, UserService userService, MessageSource messageSource) {
         this.institutionService = institutionService;
         this.donationService = donationService;
         this.userService = userService;
+        this.messageSource = messageSource;
     }
 
 
     @GetMapping
     public String homeAction(Model model) {
-        log.debug("log inside controller");
+//        log.debug("log inside controller");
         List<InstitutionDto> institutionDtos = institutionService.getList();
         Integer donationSum = donationService.donationSum();
         int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
@@ -41,26 +44,30 @@ public class HomeController {
         model.addAttribute("institutions", institutionDtos);
         model.addAttribute("donationSum", donationSum);
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
+
         return "index";
     }
 
-    @GetMapping("adminPanel")
+    @GetMapping("/adminPanel")
     public String adminPanel(Model model) throws ParseException {
+        Locale locale = LocaleContextHolder.getLocale();
+
         Integer donationSum = donationService.donationSum();
         int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
         Integer numberOfUsers = userService.countAllUsers();
         Double donationsPerDay = donationService.getDonationsPerDay();
         List<String> donationsSumsInLastTwelveMonths = donationService.donationsSumsInLastTwelveMonths();
-        List<String> chartLabels = donationService.lastTwelveMonthsNames();
-        List<String> pieChartLabels = donationService.pieChartLabels();
+        List<String> donationsInLastTwelveMonths = donationService.donationsInLastTwelveMonths();
+        List<String> chartLabels = donationService.lastTwelveMonthsNames(locale);
+        List<String> pieChartLabels = donationService.chartLabels(messageSource.getMessage("other.institutions", new Object[0], locale));
         List<Long> pieChartValues = donationService.pieChartValues();
-        List<UserDto> adminDtos = userService.findAllAdmins();
 
         model.addAttribute("donationSum", donationSum);
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
         model.addAttribute("numberOfUsers", numberOfUsers);
         model.addAttribute("donationsPerDay", donationsPerDay);
         model.addAttribute("donationsSumsInLastTwelveMonths", donationsSumsInLastTwelveMonths);
+        model.addAttribute("donationsInLastTwelveMonths", donationsInLastTwelveMonths);
         model.addAttribute("chartLabels", chartLabels);
         model.addAttribute("pieChartLabels", pieChartLabels);
         model.addAttribute("pieChartValues", pieChartValues);

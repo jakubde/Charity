@@ -151,8 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updateForm() {
             this.$step.innerText = this.currentStep;
 
-            // TODO: Validation
-
             this.slides.forEach(slide => {
                 slide.classList.remove("active");
 
@@ -164,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
             this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 5;
             this.$step.parentElement.hidden = this.currentStep >= 5;
 
-            // TODO: get data from inputs and show them in summary
         }
 
     }
@@ -195,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
          */
 
             //Getting checked checkboxes elements
-        let checkedCheckboxes = $("input:checked.auxiliary").parent();//dla radio bez tego .auxiliary
+        let checkedCheckboxes = $("input:checked.auxiliary").parent();
 
         //Getting categories names
         checkedCheckboxes.each(function () {
@@ -206,33 +203,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
         checkedCategories = checkedCategories.substring(0, checkedCategories.length - 1);
-
+        console.log(checkedCategories);
         //inserting span with categories names to jsp file
-        $("<span class=\"summary--text\"></span>").text(checkedCategories).insertAfter($("li").find("span:contains('O kategoriach')"));
-
+        let bagSpan = $("li span.icon-bag");
+        $("<span class=\"summary--text\"></span>").text(checkedCategories).insertAfter(bagSpan.parent().children().last());
         /**
          * Handling of radio buttons with institutions
          */
         checkedRadio = $("input:checked:not(.auxiliary)").parent().children().last().find('div.title').text();
-        $("<span class=\"summary--text\"></span>").text(checkedRadio).insertAfter($("li").find("span:contains('Dla')"));
+        $("<span class=\"summary--text\"></span>").text(checkedRadio).insertAfter($("li").find(".icon-hand+ .summary--text"));
 
         /**
          * Handling of input with quantity
          */
         quantity = $("#quantity").val();
-        $("<span class=\"summary--text\"></span>").text(quantity).insertAfter($("li").find("span:contains('Worków')"));
+        $("<span class=\"summary--text\"></span>").text(quantity).insertAfter(bagSpan.next());
 
         /**
          * Handling of other inputs
          */
-        $("div[data-step='5']").find("h4:contains('Adres')").next().children().first().text($("#street").val());
-        $("div[data-step='5']").find("h4:contains('Adres')").next().children().first().next().text($("#city").val());
-        $("div[data-step='5']").find("h4:contains('Adres')").next().children().last().prev().text($("#zipCode").val());
-        $("div[data-step='5']").find("h4:contains('Adres')").next().children().last().text($("#telephoneNumber").val());
+        let dataStepFiveDiv = $("div[data-step='5']");
 
-        $("div[data-step='5']").find("h4:contains('Termin')").next().children().first().text($("#pickUpDate").val());
-        $("div[data-step='5']").find("h4:contains('Termin')").next().children().first().next().text($("#pickUpTime").val());
-        $("div[data-step='5']").find("h4:contains('Termin')").next().children().last().text($("#pickUpComment").val());
+        let addressHeader = dataStepFiveDiv.find(".form-section--column:nth-child(1) h4");
+        addressHeader.next().children().first().text($("#street").val());
+        addressHeader.next().children().first().next().text($("#city").val());
+        addressHeader.next().children().last().prev().text($("#zipCode").val());
+        addressHeader.next().children().last().text($("#telephoneNumber").val());
+
+        let dateHeader = dataStepFiveDiv.find(".form-section--column+ .form-section--column h4");
+        dateHeader.next().children().first().text($("#pickUpDate").val());
+        dateHeader.next().children().first().next().text($("#pickUpTime").val());
+        dateHeader.next().children().last().text($("#pickUpComment").val());
 
         //preventing from default click
         event.preventDefault();
@@ -241,10 +242,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //if last previous button is clicked
     $('.btn.prev-step:last').on("click", function (event) {
 
-        $("span.icon-bag").parent().children().first().next().next().remove();
+        let iconBagSpan = $("span.icon-bag");
+
+        iconBagSpan.parent().children().first().next().next().remove();
         quantity = '';
 
-        $("span.icon-bag").parent().children().last().remove();
+        iconBagSpan.parent().children().last().remove();
         checkedCategories = '';
 
         $("span.icon-hand").parent().children().last().remove();

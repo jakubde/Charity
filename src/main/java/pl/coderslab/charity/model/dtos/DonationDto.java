@@ -19,9 +19,13 @@ public class DonationDto {
 
     private Integer quantity;
 
-    private List<Long> categoryIds = new ArrayList<>();
+    private List<Long> categoryIdList = new ArrayList<>();
 
     private Long institutionId;
+
+    private Long donationStatusId;
+
+    private Long userId;
 
     private String street;
     private String city;

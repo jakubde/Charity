@@ -21,48 +21,53 @@ public class UsersController {
     }
 
     @GetMapping
-    public String usersList(Model model){
+    public String usersList(Model model) {
 
         model.addAttribute("userDtos", userService.findAllUsers());
-
         return "admin/users/list";
     }
 
     @GetMapping("/edit")
-    public String editableUsersList (Model model){
+    public String editableUsersList(Model model) {
         model.addAttribute("userDtos", userService.findAllUsers());
         return "admin/users/editableList";
     }
 
     @GetMapping("/add")
-    public String prepareAddUser(Model model){
+    public String prepareAddUser(Model model) {
         model.addAttribute("userDto", new UserDto());
         return "admin/users/add";
     }
 
     @PostMapping("/add")
-    public String processAddUser(Model model, UserDto userDto){
+    public String processAddUser(Model model, UserDto userDto) {
         userService.createNewUser(userDto);
         return "redirect:/users";
     }
 
     @GetMapping("/edit/{id}")
-    public String prepareEditUser(@PathVariable String id, Model model){
+    public String prepareEditUser(@PathVariable String id, Model model) {
         model.addAttribute(userService.findUserById(Long.parseLong(id)));
         return "admin/users/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String processEditUser(@PathVariable String id, UserDto userDto){
+    public String processEditUser(@PathVariable String id, UserDto userDto) {
         //to do - BindingResult, validation
         userService.updateUserDto(Long.parseLong(id), userDto);
         return "redirect:/users/edit";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable String id){
+    public String deleteUser(@PathVariable String id) {
         userService.deleteUser(Long.parseLong(id));
         return "redirect:/users/edit";
+    }
+
+    @GetMapping("/profile/{id}")
+    public String showUserProfile(@PathVariable Long id, Model model) {
+        model.addAttribute("userDto", userService.findUserById(id));
+        return "/admin/users/profile";
     }
 
 }

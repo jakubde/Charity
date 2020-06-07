@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     @Column(nullable = false)
     private String authority;

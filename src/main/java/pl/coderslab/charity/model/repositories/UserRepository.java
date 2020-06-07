@@ -7,6 +7,7 @@ import pl.coderslab.charity.model.entities.User;
 
 import java.util.List;
 
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM users WHERE email = ?1")
@@ -29,4 +30,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(nativeQuery = true, value = "DELETE FROM user_authorities where email = ?1")
     @Modifying
     void deleteUserAuthorities(String email);
+
+    @Query(nativeQuery = true, value = "SELECT email from users")
+    List<String> getEmailList();
+
+    @Query(nativeQuery = true, value = "SELECT email from users where user_id = ?1")
+    String getEmailById(Long userId);
 }

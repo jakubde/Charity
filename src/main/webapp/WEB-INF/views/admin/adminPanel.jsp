@@ -1,14 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: kuba
-  Date: 06.11.19
-  Time: 02:15
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
+<%-- TODO - i18n --%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,20 +11,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <title>Dashboard</title>
+    <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
 
-    <!-- Custom fonts for this template-->
+    <%-- TODO - CDNs with local fallbacks --%>
+    <!-- Font Awesome Free 5.10.2 -->
     <link href="<c:url value="/resources/adminPanel/vendor/fontawesome-free/css/all.min.css"/>" rel="stylesheet"
           type="text/css">
+    <!-- Google Fonts - Nunito -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
-
-    <!-- Custom styles for this template-->
+    <!-- SB Admin 2 v4.0.7 styles -->
     <link href="<c:url value="/resources/adminPanel/css/sb-admin-2.min.css"/>" rel="stylesheet">
-
+    <%-- TODO - end--%>
 </head>
 
 <body id="page-top">
@@ -39,6 +33,7 @@
 
     <!-- Sidebar -->
     <jsp:include page="adminPanelSidebar.jsp"/>
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -48,6 +43,7 @@
 
             <!-- Topbar -->
             <jsp:include page="adminPanelTopbar.jsp"/>
+            <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -59,7 +55,6 @@
 
                 <!-- Content Row -->
                 <div class="row">
-
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
@@ -123,7 +118,7 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Dary
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Donacje
                                             dziennie
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">${donationsPerDay}</div>
@@ -135,34 +130,20 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Content Row -->
-
                 <div class="row">
 
-                    <!-- Area Chart -->
                     <div class="col-xl-8 col-lg-7">
+                        <!-- Area Chart -->
                         <div class="card shadow mb-4">
+
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Suma łączna donacji</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Dropdown Header:</div>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
                             </div>
+
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="chart-area">
@@ -170,29 +151,38 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Bar Chart -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Donacje w ostatnich 12 miesiącach</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="myBarChart" width="1039" height="320" class="chartjs-render-monitor"
+                                            style="display: block; width: 1039px; height: 320px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Pie Chart -->
+                    <!-- Donut Chart -->
                     <div class="col-xl-4 col-lg-5">
                         <div class="card shadow mb-4">
+
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Rozkład donacji</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Dropdown Header:</div>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </div>
                             </div>
+
                             <!-- Card Body -->
                             <div class="card-body">
                                 <div class="chart-pie pt-4 pb-2">
@@ -220,8 +210,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <!-- /.container-fluid -->
 
@@ -229,14 +217,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <jsp:useBean id="date" class="java.util.Date" />
-                    <span>Copyright &copy; Oddam w dobre ręce <fmt:formatDate value="${date}" pattern="yyyy"/></span>
-                </div>
-            </div>
-        </footer>
+        <jsp:include page="adminPanelFooter.jsp"/>
         <!-- End of Footer -->
 
     </div>
@@ -245,34 +226,38 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
+<!-- Scroll to Top Button -->
+<jsp:include page="adminPanelScrollToTopButton.jsp"/>
 
-<!-- Logout Modal-->
+<!-- Logout Modal -->
 <jsp:include page="adminPanelLogoutModal.jsp"/>
 
-<!-- Bootstrap core JavaScript-->
-<script src="../../resources/adminPanel/vendor/jquery/jquery.min.js"></script>
-<script src="../../resources/adminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="../../resources/adminPanel/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="../../resources/adminPanel/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="../../resources/adminPanel/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
+<%-- TODO - CDNs with local fallbacks --%>
+<!-- jQuery v3.4.1 -->
+<script src="<c:url value="/resources/adminPanel/vendor/jquery/jquery.min.js"/>"></script>
+<!-- Bootstrap v4.3.1 -->
+<script src="<c:url value="/resources/adminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+<!-- jQuery Easing v1.4.1 -->
+<script src="<c:url value="/resources/adminPanel/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
+<!-- SB Admin 2 v4.0.7 -->
+<script src="<c:url value="/resources/adminPanel/js/sb-admin-2.min.js"/>"></script>
+<!-- Chart.js v2.8.0 -->
+<script src="<c:url value="/resources/adminPanel/vendor/chart.js/Chart.min.js"/>"></script>
+<!-- Donut Chart js -->
 <script pieChartValues="${pieChartValues}" pieChartLabels="${pieChartLabels}"
-        src="../../resources/adminPanel/js/demo/chart-pie-demo.js"></script>
-
+        src="<c:url value="/resources/adminPanel/js/charts-and-tables/chart-pie.js"/>"></script>
+<!-- JS i18n String array-->
+<script type="text/javascript">
+    const languageStrings = new Array();
+    languageStrings['javascript.bags'] = "<spring:message code='javascript.bags' javaScriptEscape='true' />";
+    languageStrings['javascript.donations'] = "<spring:message code='javascript.donations' javaScriptEscape='true' />";
+</script>
+<!-- Area Chart js -->
 <script donationsSumsInLastTwelveMonths="${donationsSumsInLastTwelveMonths}" chartLabels="${chartLabels}"
-        src="../../resources/adminPanel/js/demo/chart-area-demo.js"></script>
-
+        src="<c:url value="/resources/adminPanel/js/charts-and-tables/chart-area.js"/>"></script>
+<!-- Bar Chart js -->
+<script donationsInLastTwelveMonths="${donationsInLastTwelveMonths}"
+        src="<c:url value="/resources/adminPanel/js/charts-and-tables/chart-bar.js"/>"></script>
+<%-- TODO - end --%>
 </body>
-
 </html>

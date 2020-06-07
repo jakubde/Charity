@@ -13,11 +13,11 @@ public abstract class BaseEntity implements Serializable {
     private Long id;
     @Column(name = "created_on")
     private LocalDateTime createdOn;
-    @Column(name="updated_on")
+    @Column(name = "updated_on")
     private LocalDateTime updatedOn;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         createdOn = LocalDateTime.now();
     }
 

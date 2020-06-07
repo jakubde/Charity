@@ -15,7 +15,7 @@ public class ObjectMapper {
     }
 
     public <F, T> T convert(F from, Class<T> toClass) {
-        return (T) modelMapper.map(from, toClass);
+        return modelMapper.map(from, toClass);
     }
 
     public <D, T> List<D> convertAll(final Collection<T> fromList, Class<D> outClass) {

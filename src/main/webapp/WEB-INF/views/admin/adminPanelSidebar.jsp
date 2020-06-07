@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
-<!-- Sidebar -->
+<%-- TODO i18n --%>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -18,7 +18,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/adminPanel">
+        <a class="nav-link" href="<c:url value="/adminPanel"/>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -38,7 +38,8 @@
             <i class="fas fa-fw fa-clinic-medical"></i>
             <span>Instytucje</span>
         </a>
-        <div id="collapseInstitutions" class="collapse" aria-labelledby="headingInstitutions" data-parent="#accordionSidebar">
+        <div id="collapseInstitutions" class="collapse" aria-labelledby="headingInstitutions"
+             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<c:url value="/institutions"/>">Lista
                     instytucji</a>
@@ -60,11 +61,11 @@
         <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-color.html"/>">Lista
+                <a class="collapse-item" href="<c:url value="/categories"/>">Lista
                     kategorii</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-border.html"/>">Dodaj
+                <a class="collapse-item" href="<c:url value="/categories/add"/>">Dodaj
                     kategorię</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-animation.html"/>">Edytuj/Usuń
+                <a class="collapse-item" href="<c:url value="/categories/edit"/>">Edytuj/Usuń
                     kategorię</a>
             </div>
         </div>
@@ -80,12 +81,32 @@
         <div id="collapseDonations" class="collapse" aria-labelledby="headingDonations"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-color.html"/>">Lista
+                <a class="collapse-item" href="<c:url value="/donations/"/>">Lista
                     donacji</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-border.html"/>">Dodaj
+                <a class="collapse-item" href="<c:url value="/donations/add"/>">Dodaj
                     donację</a>
-                <a class="collapse-item" href="<c:url value="/resources/adminPanel/utilities-animation.html"/>">Edytuj/Usuń
+                <a class="collapse-item" href="<c:url value="/donations/edit"/>">Edytuj/Usuń
                     donację</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Donation Statuses Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDonationStatuses"
+           aria-expanded="true" aria-controls="collapseDonationStatuses">
+            <i class="fas fa-shipping-fast fa-grip-horizontal"></i>
+            <span>Statusy donacji</span>
+        </a>
+        <div id="collapseDonationStatuses" class="collapse" aria-labelledby="headingUsers"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<c:url value="/donationStatus"/>">Lista
+                    statusów</a>
+                <a class="collapse-item" href="<c:url value="/donationStatus/add"/>">Dodaj
+                    status</a>
+                <a class="collapse-item" href="<c:url value="/donationStatus/edit"/>">Edytuj/Usuń
+                    status</a>
             </div>
         </div>
     </li>
@@ -138,4 +159,3 @@
     </div>
 
 </ul>
-<!-- End of Sidebar -->

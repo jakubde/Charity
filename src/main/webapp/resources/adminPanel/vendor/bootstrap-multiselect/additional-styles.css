@@ -1,0 +1,10 @@
+ul.multiselect-container {
+    min-width: max-content;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+label.multiple-select {
+    display: block;
+}
+

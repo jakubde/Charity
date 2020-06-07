@@ -1,7 +1,10 @@
 package pl.coderslab.charity.model.entities;
 
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,15 +20,16 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "donations")
-@AttributeOverride(name="id", column=@Column(name="donation_id"))
+@AttributeOverride(name = "id", column = @Column(name = "donation_id"))
 public class Donation extends BaseEntity {
 
     @Column(nullable = false)
     private Integer quantity;
 
     @ManyToMany(
-            targetEntity=Category.class,
-            fetch = FetchType.EAGER
+            targetEntity = Category.class,
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
     )
     @JoinTable(
             name = "donation_category",
@@ -48,5 +52,13 @@ public class Donation extends BaseEntity {
 
     private LocalTime pickUpTime;
     private String pickUpComment;
+
+    @ManyToOne
+    @JoinColumn(name = "donation_status_id")
+    private DonationStatus donationStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

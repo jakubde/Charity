@@ -27,7 +27,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         org.springframework.security.core.userdetails.User userSpring = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = userSpring.getUsername();
 
-        UserDto userDto = userService.findUserbyEmail(email);
+        UserDto userDto = userService.findUserByEmail(email);
         String firstName = userDto.getFirstName();
 
         request.getSession().setAttribute("firstName", firstName);
