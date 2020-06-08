@@ -9,7 +9,7 @@ This is Java-based web application project for a charity whose main purpose is t
 * MySQL
 
 **Useful but not necessary:**
-* IDE that supports a integration with Maven
+* IDE that supports an integration with Maven
 * Git or Subversion - to benefit from the advantages and functionality of version control systems
 
 ## Installation
