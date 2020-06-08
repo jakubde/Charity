@@ -5,7 +5,7 @@ This is Java-based web application project for a charity whose main purpose is t
 ## Prerequisites
 **Before installing you need:**
 * Java 8 or later
-* Apache Maven (or [IDE that supports a integration with Maven](https://stackoverflow.com/questions/7025229/free-java-ide-with-the-best-maven-integration) e.g. IntelliJ IDEA)
+* Apache Maven (or [IDE that supports an integration with Maven](https://stackoverflow.com/questions/7025229/free-java-ide-with-the-best-maven-integration) e.g. IntelliJ IDEA)
 * MySQL
 
 **Useful but not necessary:**
