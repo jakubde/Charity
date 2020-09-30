@@ -25,33 +25,38 @@
         <div class="form-group">
             <form:input path="firstName" placeholder="Imię" cssErrorClass="invalid-input"/>
             <div class="invalid-input">
-                <form:errors path="firstName" cssClass="invalid-input"/>
+                <c:if test = "${firstNameErrorMessage != null}">
+                    <span id="firstName.errors" class="invalid-input">${firstNameErrorMessage}</span>
+                </c:if>
             </div>
         </div>
         <div class="form-group">
             <form:input path="lastName" placeholder="Nazwisko" cssErrorClass="invalid-input"/>
             <div class="invalid-input">
-                <form:errors path="lastName" cssClass="invalid-input"/>
+                 <c:if test = "${lastNameErrorMessage != null}">
+                    <span id="lastName.errors" class="invalid-input">${lastNameErrorMessage}</span>
+                </c:if>
             </div>
         </div>
         <div class="form-group">
             <form:input path="email" type="email" placeholder="Email" cssErrorClass="invalid-input"/>
             <div class="invalid-input">
-                <form:errors path="email" cssClass="invalid-input"/>
+                 <c:if test = "${emailErrorMessage != null}">
+                    <span id="email.errors" class="invalid-input">${emailErrorMessage}</span>
+                </c:if>
             </div>
         </div>
         <div class="form-group">
             <form:input path="password" type="password" placeholder="Hasło" cssErrorClass="invalid-input"/>
             <div class="invalid-input">
-                <form:errors path="password" cssClass="invalid-input"/>
+                 <c:if test = "${passwordErrorMessage != null}">
+                    <span id="password.errors" class="invalid-input">${passwordErrorMessage}</span>
+                </c:if>
             </div>
         </div>
         <div class="form-group">
             <form:input path="confirmPassword" type="password" placeholder="Powtórz hasło"
                         cssErrorClass="invalid-input"/>
-            <div class="invalid-input">
-                <form:errors path="confirmPassword" cssClass="invalid-input"/>
-            </div>
         </div>
 
         <div class="form-group form-group--buttons">
@@ -72,3 +77,4 @@
 <%--<script src="<c:url value="/resources/js/register-form.js"/>"></script>--%>
 </body>
 </html>
+
