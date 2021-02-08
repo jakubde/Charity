@@ -1,6 +1,7 @@
 package pl.coderslab.charity.services;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.time.LocalDateTime;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -201,7 +202,12 @@ public class UserService {
             roleUser.setAuthority("ROLE_USER");
             userDto.getRoles().add(roleUser);
             userRepository.save(objectMapper.convert(userDto, User.class));
-        } else if (!userDto.getEnabled()) {
+        } else if (!userRepository.findByEmail(userDto.getEmail()).getEnabled()) {
+            String firstName = userDto.getFirstName();
+            String lastName = userDto.getLastName();
+            userDto = findUserByEmail(userDto.getEmail());
+            userDto.setFirstName(firstName);
+            userDto.setLastName(lastName);
 //            String encodedPassword = bCryptPasswordEncoder.encode(userDto.getPassword());
             String encodedPassword = passwordEncoder.encode(userDto.getPassword());
             userDto.setPassword(encodedPassword);

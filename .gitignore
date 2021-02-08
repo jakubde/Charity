@@ -24,6 +24,9 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+nbactions.xml
+nb-configuration.xml
+nbactions-release-profile.xml
 
 ### VS Code ###
 .vscode/

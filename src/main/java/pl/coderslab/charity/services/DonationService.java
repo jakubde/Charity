@@ -106,17 +106,33 @@ public class DonationService {
         for (int i = 0; i < 12; i++) {
             String lastDayOfSpecificMonth;
             if (currentDate.getMonth().getValue() - i < 1) {
-                lastDayOfSpecificMonth = currentDate
-                        .withDayOfMonth(currentDate.withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i)).getMonth().maxLength())
-                        .withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i))
-                        .withYear(currentDate.getYear() - 1)
-                        .toString();
+                if ((currentDate.getYear() - 1) % 4 == 0) {
+                    lastDayOfSpecificMonth = currentDate
+                            .withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i))
+                            .withDayOfMonth(currentDate.withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i)).getMonth().maxLength())
+                            .withYear(currentDate.getYear() - 1)
+                            .toString();
+                } else {
+                    lastDayOfSpecificMonth = currentDate
+                            .withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i))
+                            .withDayOfMonth(currentDate.withMonth(12 - Math.abs(currentDate.getMonth().getValue() - i)).getMonth().maxLength() - (currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().getValue() == 2 ? 1 : 0))
+                            .withYear(currentDate.getYear() - 1)
+                            .toString();
+                }
             } else {
-                lastDayOfSpecificMonth = currentDate
-                        .withDayOfMonth(currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().maxLength())
-                        .withMonth(currentDate.getMonth().getValue() - i).toString();
+                if (currentDate.getYear() % 4 == 0) {
+                    lastDayOfSpecificMonth = currentDate
+                            .withMonth(currentDate.getMonth().getValue() - i)
+                            .withDayOfMonth(currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().maxLength())
+                            .toString();
+                } else {
+                    lastDayOfSpecificMonth = currentDate
+                            .withMonth(currentDate.getMonth().getValue() - i)
+                            .withDayOfMonth(currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().maxLength() - (currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().getValue() == 2 ? 1 : 0))
+                            .toString();
+                            
+                }
             }
-            System.out.println(lastDayOfSpecificMonth);
             Integer bagsNumber = donationRepository.sumDonationsWhereDateComesBefore(lastDayOfSpecificMonth);
             if (bagsNumber == null) {
                 bagsNumber = 0;
