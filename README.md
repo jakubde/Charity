@@ -169,4 +169,4 @@ If you want to use app as regular logged-in user or admin log in with credential
 ## Licence
 
 
-This project is licensed under the terms and conditions of the [MIT License](https://choosealicense.com/licenses/mit/) - for more details see the LICENSE file.
+This project is licensed under the terms and conditions of the [MIT License](https://choosealicense.com/licenses/mit/) - for more details see the [LICENSE](https://github.com/jakubde/Charity/blob/master/LICENSE) file.
