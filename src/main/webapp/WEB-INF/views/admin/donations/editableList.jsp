@@ -25,6 +25,7 @@
     <!-- DataTables styles -->
     <link href="<c:url value="/resources/adminPanel/vendor/datatables/dataTables.bootstrap4.min.css"/>"
           rel="stylesheet">
+    <link href="<c:url value="/resources/css/auxiliary.css"/>" rel="stylesheet">
     <%-- TODO - end --%>
 </head>
 
@@ -140,11 +141,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <ul>
                                                 <c:forEach items="${donationDto.categoryIdList}" var="categoryId">
-                                                    <li>${categoryMap.get(categoryId)}</li>
+                                                    <p class="table-list">• ${categoryMap.get(categoryId)}</p>
                                                 </c:forEach>
-                                            </ul>
                                         </td>
                                         <c:choose>
                                             <c:when test="${language.equals('pl')}">
