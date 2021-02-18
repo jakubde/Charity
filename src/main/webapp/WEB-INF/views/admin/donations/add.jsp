@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <label for="userEmail"><b>Użytkownik</b></label>
                                         <input id="userEmail" name="userEmail"
-                                               class="form-control form-control-user typeahead"
+                                               class="form-control form-control-user"
                                                placeholder="Użytkownik"/>
                                     </div>
 
@@ -194,11 +194,6 @@
 <script src="<c:url value="/resources/adminPanel/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
 <!-- SB Admin 2 v4.0.7 -->
 <script src="<c:url value="/resources/adminPanel/js/sb-admin-2.min.js"/>"></script>
-<!-- Typeahead v4.0.2 -->
-<script src="<c:url value="/resources/adminPanel/vendor/typeahead/bootstrap3-typeahead.min.js"/>"></script>
-<!-- Setting and calling Typeahead -->
-<script userEmailList="${userEmailList}" institutionNameList="${institutionNameListAsString}"
-        src="<c:url value="/resources/adminPanel/utils/js/typeahead-set-and-call.js"/>"></script>
 <!-- Bootstrap Multiselect v2.0 -->
 <script src="<c:url value="/resources/adminPanel/vendor/bootstrap-multiselect/bootstrap-multiselect.js"/>"></script>
 <!-- Bootstrap Multiselect call -->

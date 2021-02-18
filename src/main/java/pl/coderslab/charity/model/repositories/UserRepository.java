@@ -31,9 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     void deleteUserAuthorities(String email);
 
-    @Query(nativeQuery = true, value = "SELECT email from users")
-    List<String> getEmailList();
-
     @Query(nativeQuery = true, value = "SELECT email from users where user_id = ?1")
     String getEmailById(Long userId);
 }

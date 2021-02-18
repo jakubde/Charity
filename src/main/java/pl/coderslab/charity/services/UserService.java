@@ -293,10 +293,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<String> getUserEmailList() {
-        return userRepository.getEmailList();
-    }
-
     public String getUserEmailById(Long userId) {
         return userRepository.getEmailById(userId);
     }
