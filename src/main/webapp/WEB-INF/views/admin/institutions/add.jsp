@@ -71,6 +71,16 @@
                                         <form:textarea path="description" cssClass="form-control rounded-0"
                                                        id="descriptionInput" rows="3"/>
                                     </div>
+                                    <hr/>
+                                     <div class="form-group">
+                                        <form:input path="nameEng" class="form-control form-control-user"
+                                                    placeholder="Nazwa po angielsku"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descriptionInput">Opis po angielsku</label>
+                                        <form:textarea path="descriptionEng" cssClass="form-control rounded-0"
+                                                       rows="3"/>
+                                    </div>
                                     <a href="javascript:{}"
                                        onclick="document.getElementById('institutionAddForm').submit();"
                                        class="btn btn-primary btn-user btn-block">

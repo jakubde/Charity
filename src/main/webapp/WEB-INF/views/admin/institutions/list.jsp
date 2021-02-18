@@ -62,12 +62,16 @@
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Nazwa po angielsku</th>
+                                    <th>Opis po angielsku</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Nazwa po angielsku</th>
+                                    <th>Opis po angielsku</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -75,6 +79,8 @@
                                     <tr>
                                         <td>${institutionDto.name}</td>
                                         <td>${institutionDto.description}</td>
+                                        <td>${institutionDto.nameEng}</td>
+                                        <td>${institutionDto.descriptionEng}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

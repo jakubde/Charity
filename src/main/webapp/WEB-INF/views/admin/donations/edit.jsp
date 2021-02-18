@@ -29,10 +29,6 @@
     <!-- Bootstrap Multiselect additional styles -->
     <link href="<c:url value="/resources/adminPanel/vendor/bootstrap-multiselect/additional-styles.css"/>"
           rel="stylesheet">
-    <!-- Additional view styles -->
-    <link href="<c:url value="/resources/adminPanel/utils/css/forms.css"/>"
-          rel="stylesheet">
-
 
     <%-- TODO - end --%>
 </head>
@@ -73,33 +69,56 @@
                             <div class="card-body">
                                 <form:form method="post" cssClass="user" modelAttribute="donationDto"
                                            id="donationEditForm">
-
+                                    
                                     <div class="form-group">
-                                        <label class="hidden-label" for="userEmail"></label>
-                                        <input id="userEmail"
-                                               name="userEmail"
+                                        <label for="userEmail"><b>Użytkownik</b></label>
+                                        <input id="userEmail" name="userEmail"
                                                class="form-control form-control-user typeahead"
                                                placeholder="Użytkownik"
-                                               autocomplete="off"
                                                value="${userEmail}"/>
                                     </div>
-
+                                    
                                     <div class="form-group">
-                                        <label class="hidden-label" for="institutionName"></label>
-                                        <input id="institutionName" name="institutionName"
-                                               class="form-control form-control-user typeahead"
-                                               placeholder="Instytucja" autocomplete="off"
-                                               value="${institutionMap.get(donationDto.institutionId)}"/>
+                                        <label for="institutionSelect" class="multiple-select"><b>Instytucja</b></label>
+                                        <select name="institutionId" id="institutionSelect">
+                                            <c:forEach items="${institutionMap}" var="institution">
+                                                 <c:choose>
+                                                    <c:when test="${language.equals('pl')}">
+                                                
+                                                        <c:choose>
+                                                            <c:when test="${donationDto.institutionId.equals(institution.key)}">
+                                                                <option selected value="${institution.key}">${institution.value.get(0)}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${institution.key}">${institution.value.get(0)}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        
+                                                        <c:choose>
+                                                            <c:when test="${donationDto.institutionId.equals(institution.key)}">
+                                                                <option selected value="${institution.key}">${institution.value.get(1)}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${institution.key}">${institution.value.get(1)}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
                                     </div>
-
+                                    
                                     <div class="form-group">
-                                        <label for="categorySelect" class="multiple-select"><b>Kategorie:</b></label>
+                                        <label for="statusSelect" class="multiple-select"><b>Status</b></label>
                                         <select name="statusId" id="statusSelect">
                                             <c:forEach items="${donationStatusMap}" var="status">
                                                 <c:choose>
-                                                    <c:when test="${donationStatusMap.containsKey(donationDto.donationStatusId)}">
-                                                        <option selected
-                                                                value="${status.key}">${status.value}</option>
+                                                    <c:when test="${donationDto.donationStatusId.equals(status.key)}">
+                                                        <option selected value="${status.key}">${status.value}</option>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <option value="${status.key}">${status.value}</option>
@@ -110,7 +129,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="categorySelect" class="multiple-select"><b>Kategorie:</b></label>
+                                        <label for="categorySelect" class="multiple-select"><b>Kategorie</b></label>
                                         <select name="categoryIdListAsString" id="categorySelect" multiple="multiple">
                                             <c:forEach items="${categoryMap}" var="category">
                                                 <c:choose>
@@ -127,38 +146,44 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <form:label path="quantity"><b>Liczba worków</b></form:label>
                                         <form:input type="number" path="quantity"
                                                     cssClass="form-control form-control-user"
                                                     placeholder="Liczba worków"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="city"><b>Miasto</b></form:label>
                                         <form:input path="city" cssClass="form-control form-control-user"
                                                     placeholder="Miasto"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="street"><b>Ulica i nr domu</b></form:label>
                                         <form:input path="street" cssClass="form-control form-control-user"
                                                     placeholder="Ulica i nr domu"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="zipCode"><b>Kod pocztowy</b></form:label>
                                         <form:input path="zipCode" cssClass="form-control form-control-user"
                                                     placeholder="Kod pocztowy"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="telephoneNumber"><b>Nr telefonu</b></form:label>
                                         <form:input type="tel" path="telephoneNumber"
                                                     cssClass="form-control form-control-user"
                                                     placeholder="Nr telefonu"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="pickUpDate"><b>Data odbioru</b></form:label>
                                         <form:input type="date" path="pickUpDate"
-                                                    cssClass="form-control form-control-user"
-                                                    placeholder="Data odbioru"></form:input>
+                                                    cssClass="form-control form-control-user"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="pickUpTime"><b>Godzina odbioru</b></form:label>
                                         <form:input type="time" path="pickUpTime"
-                                                    cssClass="form-control form-control-user"
-                                                    placeholder="Godzina odbioru"></form:input>
+                                                    cssClass="form-control form-control-user"></form:input>
                                     </div>
                                     <div class="form-group">
+                                        <form:label path="pickUpComment"><b>Komentarz dot. odbioru</b></form:label>
                                         <form:textarea path="pickUpComment" cssClass="form-control"
                                                        placeholder="Komentarz dot. odbioru"></form:textarea>
                                     </div>
@@ -214,6 +239,7 @@
 <script type="text/javascript">
     $('#categorySelect').multiselect();
     $('#statusSelect').multiselect();
+    $('#institutionSelect').multiselect();
 </script>
 <%-- TODO - end --%>
 

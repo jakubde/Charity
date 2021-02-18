@@ -18,4 +18,10 @@ public class InstitutionDto {
 
     @NotBlank
     private String description;
+    
+    @NotBlank
+    private String nameEng;
+
+    @NotBlank
+    private String descriptionEng;
 }

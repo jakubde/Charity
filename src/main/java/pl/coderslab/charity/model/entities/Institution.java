@@ -21,5 +21,12 @@ public class Institution extends BaseEntity {
 
     @NotBlank
     private String description;
+    
+    @NotBlank
+    @Column(unique = true)
+    private String nameEng;
+    
+    @NotBlank
+    private String descriptionEng;
 
 }

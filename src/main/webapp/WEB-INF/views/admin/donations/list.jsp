@@ -113,7 +113,14 @@
                                                 <p class="table-list">• ${categoryMap.get(categoryId)}</p>
                                             </c:forEach>
                                         </td>
-                                        <td>${institutionMap.get(donationDto.institutionId)}</td>
+                                        <c:choose>
+                                            <c:when test="${language.equals('pl')}">
+                                                <td>${institutionMap.get(donationDto.institutionId).get(0)}</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td>${institutionMap.get(donationDto.institutionId).get(1)}</td>
+                                            </c:otherwise>
+                                        </c:choose> 
                                         <td>${donationDto.quantity}</td>
                                         <td>${donationStatusMap.get(donationDto.donationStatusId)}</td>
                                         <td>${donationDto.city}</td>

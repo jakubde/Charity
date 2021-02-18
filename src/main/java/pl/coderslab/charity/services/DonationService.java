@@ -303,12 +303,14 @@ public class DonationService {
         return categoryMap;
     }
 
-    public Map<Long, String> getInstitutionMap() {
-        Map<Long, String> institutionMap = new HashMap<>();
+    public Map<Long, List<String>> getInstitutionMap() {
+        Map<Long, List<String>> institutionMap = new HashMap<>();
         for (Institution institution : institutionRepository.findAll()) {
+            List<String> namesInDifferentLanguagesList = new ArrayList<>();
+            namesInDifferentLanguagesList.add(institution.getName().replace("\"", "&quot;"));
+            namesInDifferentLanguagesList.add(institution.getNameEng().replace("\"", "&quot;"));
             //replacing double quote symbol with its HTML code to properly display institution names in views
-            institutionMap.put(institution.getId(), institution.getName().replace("\"", "&quot;"));
-
+            institutionMap.put(institution.getId(), namesInDifferentLanguagesList);
         }
         return institutionMap;
     }
@@ -321,8 +323,8 @@ public class DonationService {
         return donationStatusMap;
     }
 
-    public void createDonation(String userEmail, String categoryIdListAsString, String institutionName, Long statusId, DonationDto donationDto) {
-        donationDto.setInstitutionId(getInstitutionIdByName(institutionName));
+    public void createDonation(String userEmail, String categoryIdListAsString, Long institutionId, Long statusId, DonationDto donationDto) {
+        donationDto.setInstitutionId(institutionId);
         donationDto.setDonationStatusId(statusId);
         Donation donation = objectMapper.convert(donationDto, Donation.class);
         donation.setUser(userRepository.findByEmail(userEmail));
