@@ -1,5 +1,7 @@
 package pl.coderslab.charity.controllers;
 
+import java.util.Locale;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -32,63 +34,74 @@ public class DonationsController {
 
     @GetMapping("/")
     public String showDonationList(Model model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String language = locale.getLanguage();
         model.addAttribute("donationDtoList", donationService.getList());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationService.getDonationStatusMap());
+        model.addAttribute("language", language);
         return "/admin/donations/list";
     }
 
     @GetMapping("/edit")
     public String editableDonationList(Model model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String language = locale.getLanguage();
         model.addAttribute("donationDtoList", donationService.getList());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationService.getDonationStatusMap());
+        model.addAttribute("language", language);
         return "/admin/donations/editableList";
     }
 
     @GetMapping("/add")
     public String prepareAddDonation(Model model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String language = locale.getLanguage();
         model.addAttribute("donationDto", new DonationDto());
         model.addAttribute("userEmailList", userService.getUserEmailList());
-        model.addAttribute("institutionNameListAsString", institutionService.getInstitutionNameListAsString());
+        model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationStatusService.getDonationStatusMap());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
+        model.addAttribute("language", language);
         return "/admin/donations/add";
     }
 
     @PostMapping("/add")
     public String processAddDonation(String userEmail,
                                      String categoryIdListAsString,
-                                     String institutionName,
+                                     Long institutionId,
                                      Long statusId,
                                      DonationDto donationDto) {
 
-        donationService.createDonation(userEmail, categoryIdListAsString, institutionName, statusId, donationDto);
+        donationService.createDonation(userEmail, categoryIdListAsString, institutionId, statusId, donationDto);
         return "redirect:/donations/";
     }
 
     @GetMapping("/edit/{id}")
     public String prepareEditDonation(@PathVariable Long id, Model model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String language = locale.getLanguage();
         DonationDto donationDto = donationService.findDonationById(id);
         model.addAttribute("donationDto", donationDto);
         model.addAttribute("userEmailList", userService.getUserEmailList());
-        model.addAttribute("institutionNameListAsString", institutionService.getInstitutionNameListAsString());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationService.getDonationStatusMap());
         model.addAttribute("userEmail", userService.getUserEmailById(donationDto.getUserId()));
+        model.addAttribute("language", language);
         return "/admin/donations/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String processEditDonation(String userEmail,
                                       String categoryIdListAsString,
-                                      String institutionName,
+                                      Long institutionId,
                                       Long statusId,
                                       DonationDto donationDto) {
-        donationService.createDonation(userEmail, categoryIdListAsString, institutionName, statusId, donationDto);
+        donationService.createDonation(userEmail, categoryIdListAsString, institutionId, statusId, donationDto);
         return "redirect:/donations/edit";
     }
 

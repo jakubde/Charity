@@ -101,8 +101,8 @@
             <li>
                 <c:forEach items="${institutions}" var="institution" varStatus="status">
                 <div class="col">
-                    <div class="title">${institution.name}</div>
-                    <div class="subtitle">${institution.description}</div>
+                    <div class="title">${institution.get(0)}</div>
+                    <div class="subtitle">${institution.get(1)}</div>
                 </div>
 
                 <c:if test="${status.count % 2 == 0 && status.count != institutions.size()}">

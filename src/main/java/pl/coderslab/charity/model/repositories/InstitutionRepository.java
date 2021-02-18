@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
     Institution findAllById(Long id);
-
-    @Query(nativeQuery = true, value = "select name from institutions")
-    List<String> getNameList();
-
+    
     @Query(nativeQuery = true, value = "select id from institutions where name = ?1")
     Long getIdByName(String name);
 }

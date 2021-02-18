@@ -62,6 +62,8 @@
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Nazwa po angielsku</th>
+                                    <th>Opis po angielsku</th>
                                     <th>Akcja</th>
                                 </tr>
                                 </thead>
@@ -69,6 +71,8 @@
                                 <tr>
                                     <th>Nazwa</th>
                                     <th>Opis</th>
+                                    <th>Nazwa po angielsku</th>
+                                    <th>Opis po angielsku</th>
                                     <th>Akcja</th>
                                 </tr>
                                 </tfoot>
@@ -77,6 +81,8 @@
                                     <tr>
                                         <td>${institutionDto.name}</td>
                                         <td>${institutionDto.description}</td>
+                                        <td>${institutionDto.nameEng}</td>
+                                        <td>${institutionDto.descriptionEng}</td>
                                         <td style="text-align:center; white-space:nowrap"><a
                                                 href="<c:url value="/institutions/edit/${institutionDto.id}"/>">Edytuj</a>　|　<a
                                                 href="#"

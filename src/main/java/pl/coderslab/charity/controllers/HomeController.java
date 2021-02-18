@@ -33,15 +33,13 @@ public class HomeController {
         this.messageSource = messageSource;
     }
 
-
     @GetMapping
     public String homeAction(Model model) {
-//        log.debug("log inside controller");
-        List<InstitutionDto> institutionDtos = institutionService.getList();
+        List<List<String>> institutionNameAndDescriptionInCorrespondingLanguage = institutionService.getInstitutionNameAndDescriptionInCorrespondingLanguage();
         Integer donationSum = donationService.donationSum();
         int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
 
-        model.addAttribute("institutions", institutionDtos);
+        model.addAttribute("institutions", institutionNameAndDescriptionInCorrespondingLanguage);
         model.addAttribute("donationSum", donationSum);
         model.addAttribute("donatedInstitutionsSum", donatedInstitutionsSum);
 
