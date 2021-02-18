@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.model.dtos.DonationDto;
 import pl.coderslab.charity.services.DonationService;
 import pl.coderslab.charity.services.DonationStatusService;
-import pl.coderslab.charity.services.InstitutionService;
 import pl.coderslab.charity.services.UserService;
 
 @Transactional
@@ -22,13 +21,11 @@ public class DonationsController {
 
     private final DonationService donationService;
     private final UserService userService;
-    private final InstitutionService institutionService;
     private final DonationStatusService donationStatusService;
 
-    public DonationsController(DonationService donationService, UserService userService, InstitutionService institutionService, DonationStatusService donationStatusService) {
+    public DonationsController(DonationService donationService, UserService userService, DonationStatusService donationStatusService) {
         this.donationService = donationService;
         this.userService = userService;
-        this.institutionService = institutionService;
         this.donationStatusService = donationStatusService;
     }
 
@@ -61,7 +58,6 @@ public class DonationsController {
         Locale locale = LocaleContextHolder.getLocale();
         String language = locale.getLanguage();
         model.addAttribute("donationDto", new DonationDto());
-        model.addAttribute("userEmailList", userService.getUserEmailList());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationStatusService.getDonationStatusMap());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
@@ -86,7 +82,6 @@ public class DonationsController {
         String language = locale.getLanguage();
         DonationDto donationDto = donationService.findDonationById(id);
         model.addAttribute("donationDto", donationDto);
-        model.addAttribute("userEmailList", userService.getUserEmailList());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
         model.addAttribute("donationStatusMap", donationService.getDonationStatusMap());
