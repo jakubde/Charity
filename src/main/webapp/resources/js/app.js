@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let dateHeader = dataStepFiveDiv.find(".form-section--column+ .form-section--column h4");
         dateHeader.next().children().first().text($("#pickUpDate").val());
-        dateHeader.next().children().first().next().text($("#pickUpTime").val());
+        dateHeader.next().children().first().next().text($("#pickTime").val());
         dateHeader.next().children().last().text($("#pickUpComment").val());
 
         //preventing from default click

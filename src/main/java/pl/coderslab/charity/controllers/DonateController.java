@@ -12,6 +12,8 @@ import pl.coderslab.charity.services.InstitutionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 
 @Controller
@@ -30,6 +32,8 @@ public class DonateController {
 
     @GetMapping
     public String prepareAddDonation(Model model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String language = locale.getLanguage();
 
         List<InstitutionDto> institutionDtos = institutionService.getList();
         List<CategoryDto> categoryDtos = categoryService.getList();
@@ -37,13 +41,15 @@ public class DonateController {
         model.addAttribute("categories", categoryDtos);
         model.addAttribute("donation", new DonationDto());
         model.addAttribute("institutions", institutionDtos);
+        model.addAttribute("language", language);
 
         return "form";
     }
 
     @PostMapping
-    public String processAddDonation(DonationDto donationDto, HttpServletRequest httpServletRequest) {
+    public String processAddDonation(DonationDto donationDto, String pickTime, HttpServletRequest httpServletRequest) {
         donationDto.setUserId(donationService.getUserIdByEmail(httpServletRequest.getSession().getAttribute("email").toString()));
+        donationDto.setPickUpTime(donationService.timeInProperFormat(pickTime));
         donationService.saveDonation(donationDto);
         return "redirect:/";
     }

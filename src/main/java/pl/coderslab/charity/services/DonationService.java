@@ -15,6 +15,8 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -130,7 +132,7 @@ public class DonationService {
                             .withMonth(currentDate.getMonth().getValue() - i)
                             .withDayOfMonth(currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().maxLength() - (currentDate.withMonth(currentDate.getMonth().getValue() - i).getMonth().getValue() == 2 ? 1 : 0))
                             .toString();
-                            
+
                 }
             }
             Integer bagsNumber = donationRepository.sumDonationsWhereDateComesBefore(lastDayOfSpecificMonth);
@@ -350,5 +352,28 @@ public class DonationService {
         DonationStatus donationStatus = donationStatusRepository.findAllById(donationStatusId);
         donation.setDonationStatus(donationStatus);
         donationRepository.save(donation);
+    }
+
+    public LocalTime timeInProperFormat(String pickUpTime) {
+
+        pickUpTime = pickUpTime.replaceAll("\\s+","");  //removes all whitespaces
+        
+        if (pickUpTime.contains("AM") || pickUpTime.contains("PM")) {
+            
+            String pickUpTimePrefix = pickUpTime.substring(0, 5);   //e.g. 11:31
+            String pickUpTimeSuffix = pickUpTime.substring(5, pickUpTime.length()); //e.g. AM
+            pickUpTime = pickUpTimePrefix + " " + pickUpTimeSuffix;
+
+            DateTimeFormatter twelveHourFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+            LocalTime localTime = LocalTime.parse(pickUpTime, twelveHourFormatter);
+            return localTime;
+            
+        } else {
+            
+            DateTimeFormatter twentyFourHourFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime localTime = LocalTime.parse(pickUpTime, twentyFourHourFormatter);
+            return localTime;
+        }
     }
 }
