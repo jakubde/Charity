@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="form-group">
                                         <form:input path="nameEng" class="form-control form-control-user"
-                                                    placeholder="Nazwa"/>
+                                                    placeholder="Nazwa po angielsku"/>
                                     </div>
                                     <a href="javascript:{}"
                                        onclick="document.getElementById('categoryEditForm').submit();"

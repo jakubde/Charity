@@ -59,7 +59,7 @@ public class DonationsController {
         String language = locale.getLanguage();
         model.addAttribute("donationDto", new DonationDto());
         model.addAttribute("institutionMap", donationService.getInstitutionMap());
-        model.addAttribute("donationStatusMap", donationStatusService.getDonationStatusMap());
+        model.addAttribute("donationStatusMap", donationService.getDonationStatusMap());
         model.addAttribute("categoryMap", donationService.getCategoryMap());
         model.addAttribute("language", language);
         return "/admin/donations/add";

@@ -13,4 +13,6 @@ public class DonationStatusDto {
     private Long id;
 
     private String name;
+    
+    private String nameEng;
 }

@@ -130,8 +130,6 @@
                                                                    data-toggle="modal"
                                                                    data-target="#deleteModal">Usuń
                                                                 </a>
-                                                                <%--                                                    <a class="dropdown-item"--%>
-                                                                <%--                                                       href="<c:url value="/donations/delete/${donationDto.id}"/>">Usuń</a>--%>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -163,7 +161,14 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                     <td>${donationDto.quantity}</td>
-                                                    <td>${donationStatusMap.get(donationDto.donationStatusId)}</td>
+                                                    <c:choose>
+                                                        <c:when test="${language.equals('pl')}">
+                                                            <td>${donationStatusMap.get(donationDto.donationStatusId).get(0)}</td>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <td>${donationStatusMap.get(donationDto.donationStatusId).get(1)}</td>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <td>${donationDto.city}</td>
                                                     <td>${donationDto.street}</td>
                                                     <td>${donationDto.zipCode}</td>

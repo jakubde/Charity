@@ -97,7 +97,14 @@
                                         <label for="statusSelect" class="multiple-select"><b>Status</b></label>
                                         <select name="statusId" id="statusSelect">
                                             <c:forEach items="${donationStatusMap}" var="status">
-                                                <option value="${status.key}">${status.value}</option>
+                                                 <c:choose>
+                                                    <c:when test="${language.equals('pl')}">
+                                                <option value="${status.key}">${status.value.get(0)}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <option value="${status.key}">${status.value.get(1)}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </select>
                                     </div>
