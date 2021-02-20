@@ -297,10 +297,13 @@ public class DonationService {
         return userRepository.findByEmail(email).getId();
     }
 
-    public Map<Long, String> getCategoryMap() {
-        Map<Long, String> categoryMap = new HashMap<>();
+    public Map<Long, List<String>> getCategoryMap() {
+        Map<Long, List<String>> categoryMap = new HashMap<>();
         for (Category category : categoryRepository.findAll()) {
-            categoryMap.put(category.getId(), category.getName());
+            List<String> namesInDifferentLanguagesList = new ArrayList<>();
+            namesInDifferentLanguagesList.add(category.getName());
+            namesInDifferentLanguagesList.add(category.getNameEng());
+            categoryMap.put(category.getId(), namesInDifferentLanguagesList);
         }
         return categoryMap;
     }

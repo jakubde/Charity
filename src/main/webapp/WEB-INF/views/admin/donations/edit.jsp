@@ -132,15 +132,35 @@
                                         <label for="categorySelect" class="multiple-select"><b>Kategorie</b></label>
                                         <select name="categoryIdListAsString" id="categorySelect" multiple="multiple">
                                             <c:forEach items="${categoryMap}" var="category">
-                                                <c:choose>
-                                                    <c:when test="${donationDto.categoryIdList.contains(category.key)}">
-                                                        <option selected
-                                                                value="${category.key}">${category.value}</option>
+                                                 <c:choose>
+                                                    <c:when test="${language.equals('pl')}">
+                                                
+                                                        <c:choose>
+                                                            <c:when test="${donationDto.categoryIdList.contains(category.key)}">
+                                                                <option selected
+                                                                        value="${category.key}">${category.value.get(0)}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${category.key}">${category.value.get(0)}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="${category.key}">${category.value}</option>
+                                                       
+                                                        <c:choose>
+                                                            <c:when test="${donationDto.categoryIdList.contains(category.key)}">
+                                                                <option selected
+                                                                        value="${category.key}">${category.value.get(1)}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${category.key}">${category.value.get(1)}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        
                                                     </c:otherwise>
                                                 </c:choose>
+                                                
                                             </c:forEach>
                                         </select>
                                     </div>

@@ -41,14 +41,7 @@ public class CategoryService {
     public void updateCategory(CategoryDto categoryDto) {
         Category category = categoryRepository.findAllById(categoryDto.getId());
         category.setName(categoryDto.getName());
+        category.setNameEng(categoryDto.getNameEng());
         categoryRepository.save(category);
-    }
-
-    public List<String> getCategoryNameList() {
-        return categoryRepository.getCategoryNames();
-    }
-
-    public List<Long> getCategoryIdListByNameList(List<String> nameList) {
-        return nameList.stream().map(categoryRepository::getIdByName).collect(Collectors.toList());
     }
 }

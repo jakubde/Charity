@@ -17,4 +17,7 @@ public class Category extends BaseEntity {
     @NotBlank
     @Column(unique = true)
     private String name;
+    
+    @NotBlank
+    private String nameEng;
 }

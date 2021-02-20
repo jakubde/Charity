@@ -106,7 +106,14 @@
                                         <label for="categorySelect" class="multiple-select"><b>Kategorie</b></label>
                                         <select name="categoryIdListAsString" id="categorySelect" multiple="multiple">
                                             <c:forEach items="${categoryMap}" var="category">
-                                                <option value="${category.key}">${category.value}</option>
+                                                <c:choose>
+                                                    <c:when test="${language.equals('pl')}">
+                                                        <option value="${category.key}">${category.value.get(0)}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${category.key}">${category.value.get(1)}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </select>
                                     </div>

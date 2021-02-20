@@ -80,8 +80,14 @@
                             <div class="form-group form-group--checkbox">
                                 <label>
                                     <form:checkbox path="categoryIdList" cssClass="auxiliary" value="${category.id}"/>
-                                    <%--                    Javascript insert <span class="checkbox"></span>                        --%>
-                                    <span class="description"> ${category.name} </span>
+                                    <c:choose>
+                                        <c:when test="${language.equals('pl')}">
+                                            <span class="description"> ${category.name} </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="description"> ${category.nameEng} </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </label>
                             </div>
                         </c:forEach>

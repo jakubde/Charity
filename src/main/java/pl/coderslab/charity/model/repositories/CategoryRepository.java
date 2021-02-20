@@ -8,11 +8,4 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findAllById(Long id);
-
-    @Query(nativeQuery = true, value = "select name from categories")
-    List<String> getCategoryNames();
-
-    @Query(nativeQuery = true, value = "select category_id from categories where name = ?1")
-    Long getIdByName(String name);
-
 }

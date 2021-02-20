@@ -66,6 +66,10 @@
                                         <form:input path="name" class="form-control form-control-user"
                                                     placeholder="Nazwa"/>
                                     </div>
+                                    <div class="form-group">
+                                        <form:input path="nameEng" class="form-control form-control-user"
+                                                    placeholder="Nazwa"/>
+                                    </div>
                                     <a href="javascript:{}"
                                        onclick="document.getElementById('categoryEditForm').submit();"
                                        class="btn btn-primary btn-user btn-block">
