@@ -330,7 +330,7 @@ public class DonationService {
         donationDto.setDonationStatusId(statusId);
         Donation donation = objectMapper.convert(donationDto, Donation.class);
         donation.setUser(userRepository.findByEmail(userEmail));
-
+        
         List<Category> categoryList = Arrays.stream(categoryIdListAsString.split(",")).map(x -> categoryRepository.findAllById(Long.parseLong(x))).collect(Collectors.toList());
         donation.setCategories(categoryList);
 
