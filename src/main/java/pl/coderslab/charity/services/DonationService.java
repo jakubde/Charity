@@ -320,12 +320,15 @@ public class DonationService {
         return institutionMap;
     }
 
-    public Map<Long, String> getDonationStatusMap() {
-        Map<Long, String> donationStatusMap = new HashMap<>();
-        for (DonationStatus donationStatus : donationStatusRepository.findAll()) {
-            donationStatusMap.put(donationStatus.getId(), donationStatus.getName());
-        }
-        return donationStatusMap;
+    public Map<Long, List<String>> getDonationStatusMap() {
+
+        return donationStatusRepository.findAll().stream()
+                .collect(Collectors.toMap(x -> x.getId(), x -> {
+                    List<String> namesInDifferentLanguagesList = new ArrayList<>();
+                    namesInDifferentLanguagesList.add(x.getName());
+                    namesInDifferentLanguagesList.add(x.getNameEng());
+                    return namesInDifferentLanguagesList;
+                }));
     }
 
     public void createDonation(String userEmail, String categoryIdListAsString, Long institutionId, Long statusId, DonationDto donationDto) {
@@ -333,7 +336,7 @@ public class DonationService {
         donationDto.setDonationStatusId(statusId);
         Donation donation = objectMapper.convert(donationDto, Donation.class);
         donation.setUser(userRepository.findByEmail(userEmail));
-        
+
         List<Category> categoryList = Arrays.stream(categoryIdListAsString.split(",")).map(x -> categoryRepository.findAllById(Long.parseLong(x))).collect(Collectors.toList());
         donation.setCategories(categoryList);
 
@@ -359,10 +362,10 @@ public class DonationService {
 
     public LocalTime timeInProperFormat(String pickUpTime) {
 
-        pickUpTime = pickUpTime.replaceAll("\\s+","");  //removes all whitespaces
-        
+        pickUpTime = pickUpTime.replaceAll("\\s+", "");  //removes all whitespaces
+
         if (pickUpTime.contains("AM") || pickUpTime.contains("PM")) {
-            
+
             String pickUpTimePrefix = pickUpTime.substring(0, 5);   //e.g. 11:31
             String pickUpTimeSuffix = pickUpTime.substring(5, pickUpTime.length()); //e.g. AM
             pickUpTime = pickUpTimePrefix + " " + pickUpTimeSuffix;
@@ -371,9 +374,9 @@ public class DonationService {
 
             LocalTime localTime = LocalTime.parse(pickUpTime, twelveHourFormatter);
             return localTime;
-            
+
         } else {
-            
+
             DateTimeFormatter twentyFourHourFormatter = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime localTime = LocalTime.parse(pickUpTime, twentyFourHourFormatter);
             return localTime;

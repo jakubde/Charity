@@ -2,15 +2,12 @@ package pl.coderslab.charity.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.coderslab.charity.model.dtos.CategoryDto;
 import pl.coderslab.charity.model.dtos.DonationStatusDto;
 import pl.coderslab.charity.model.entities.DonationStatus;
 import pl.coderslab.charity.model.repositories.DonationStatusRepository;
 import pl.coderslab.charity.utils.ObjectMapper;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,9 +28,9 @@ public class DonationStatusService {
     public void updateDonationStatus(DonationStatusDto donationStatusDto) {
         DonationStatus donationStatus = donationStatusRepository.findAllById(donationStatusDto.getId());
         donationStatus.setName(donationStatusDto.getName());
+        donationStatus.setNameEng(donationStatusDto.getNameEng());
         donationStatusRepository.save(donationStatus);
     }
-
 
     public void deleteDonationStatus(Long id) {
         donationStatusRepository.deleteById(id);
@@ -46,10 +43,4 @@ public class DonationStatusService {
     public DonationStatusDto findById(Long id) {
         return objectMapper.convert(donationStatusRepository.findAllById(id), DonationStatusDto.class);
     }
-
-    public Map<Long, String> getDonationStatusMap() {
-        return getList().stream().collect(Collectors.toMap(x -> x.getId(), x -> x.getName()));
-    }
-
-
 }

@@ -66,6 +66,10 @@
                                         <form:input path="name" class="form-control form-control-user"
                                                     placeholder="Nazwa"/>
                                     </div>
+                                     <div class="form-group">
+                                        <form:input path="nameEng" class="form-control form-control-user"
+                                                    placeholder="Nazwa po angielsku"/>
+                                    </div>
                                     <a href="javascript:{}"
                                        onclick="document.getElementById('donationStatusAddForm').submit();"
                                        class="btn btn-primary btn-user btn-block">
