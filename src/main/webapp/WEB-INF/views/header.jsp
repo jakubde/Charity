@@ -19,7 +19,7 @@
                             <li><a href="#"><spring:message code="header.my.donations"/></a></li>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ADMIN')">
-                            <li><a href="<c:url value="/adminPanel"/>"><a href="#"><spring:message code="header.admin.panel"/></a></li>
+                            <li><a href="<c:url value="/adminPanel"/>"><spring:message code="header.admin.panel"/></a></li>
                         </sec:authorize>
                         <li>
                             <form id="logout_form" method="post" action="<c:url value="/logout"/>">
