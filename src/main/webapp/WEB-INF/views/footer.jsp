@@ -1,30 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:useBean id="date" class="java.util.Date"/>
 
-<%-- TODO - i18n --%>
 <footer>
     <div class="contact">
-        <h2>Skontaktuj się z nami</h2>
-        <h3>Formularz kontaktowy</h3>
+        <h2><spring:message code="contact.us"/></h2>
+        <h3><spring:message code="contact.form"/></h3>
         <form class="form--contact">
             <div class="form-group form-group--50">
                 <label>
-                    <input type="text" name="name" placeholder="Imię"/>
+                    <input type="text" name="name" placeholder="<spring:message code="footer.first.name"/>"/>
                 </label>
             </div>
             <div class="form-group form-group--50">
                 <label>
-                    <input type="text" name="surname" placeholder="Nazwisko"/>
+                    <input type="text" name="surname" placeholder="<spring:message code="footer.last.name"/>"/>
                 </label>
             </div>
             <div class="form-group">
                 <label>
-                    <textarea name="message" placeholder="Wiadomość" rows="1"></textarea>
+                    <textarea name="message" placeholder="<spring:message code="footer.message"/>" rows="1"></textarea>
                 </label>
             </div>
-            <button class="btn" type="submit">Wyślij</button>
+            <button class="btn" type="submit"><spring:message code="footer.send"/></button>
         </form>
     </div>
     <div class="bottom-line">
