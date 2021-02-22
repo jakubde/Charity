@@ -3,7 +3,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <jsp:useBean id="date" class="java.util.Date"/>
 
-<%-- TODO i18n --%>
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">

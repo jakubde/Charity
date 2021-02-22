@@ -1,13 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <%--    TODO - i18n--%>
-    <title>Nieaktywny link</title>
+    <title><spring:message code="the.link.has.been.sent"/></title>link.has.expired
     <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
 
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
@@ -17,12 +18,11 @@
 <jsp:include page="../header.jsp"/>
 
 <div class="centering space-bottom-top">
-    <%--    TODO - i18n--%>
-    <h2>Nieaktywny link resetujący hasło.</h2>
+    <h2><spring:message code="password.reset.link.has.expired"/></h2>
     <br>
-    <h1><a class="border-padded-a" href="<c:url value="/password-reset/request"/>">Wygeneruj nowy link</a></h1>
+    <h1><a class="border-padded-a" href="<c:url value="/password-reset/request"/>"><spring:message code="generate.a.new.link"/></a></h1>
     <br>
-    <h1><a class="border-padded-a" href="<c:url value="/"/>">Powrót do strony głównej</a></h1>
+    <h1><a class="border-padded-a" href="<c:url value="/"/>"><spring:message code="back.to.home.page"/></a></h1>
 </div>
 
 <jsp:include page="../footer.jsp"/>
