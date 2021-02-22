@@ -18,12 +18,6 @@ pieChartLabels = pieChartLabels.replace("[", "");
 pieChartLabels = pieChartLabels.replace("]", "");
 let pieChartLabelsArray = pieChartLabels.split(", ");
 
-console.log(pieChartLabels);
-console.log(pieChartValues);
-console.log(pieChartLabelsArray);
-console.log(pieChartValuesArray);
-
-
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {

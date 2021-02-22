@@ -248,14 +248,25 @@ public class DonationService {
         return sortByComparator(institutionsWithDonations, DESC);
     }
 
-    public List<String> chartLabels(String otherInstitutionsLabelInCorrectLang) {
-        List<Institution> institutionList = new ArrayList<>(sumOfDonationsPerInstitution().keySet());
-
-        List<String> labels = institutionList.stream().map(Institution::getName).map(s -> s.replaceAll("\"", "'")).collect(Collectors.toList());
-
-        if (labels.size() > 5) {
-            labels.subList(4, labels.size()).clear();
-            labels.add(otherInstitutionsLabelInCorrectLang);
+    public List<String> chartLabels(String language) {
+        List<Institution> institutionList = institutionRepository.findAll();
+        List<String> labels = new ArrayList<>();
+        
+        if(language.equals("pl")){
+            labels = institutionList.stream().map(Institution::getName).map(s -> s.replaceAll("\"", "'")).collect(Collectors.toList());
+           
+            if (labels.size() > 5) {
+                labels.subList(4, labels.size()).clear();
+                labels.add("Pozostałe instytucje");
+            }
+        }
+        else{
+            labels = institutionList.stream().map(Institution::getNameEng).map(s -> s.replaceAll("\"", "'")).collect(Collectors.toList());
+       
+            if (labels.size() > 5) {
+                labels.subList(4, labels.size()).clear();
+                labels.add("Other institutions");
+            }
         }
         return labels;
     }

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<%-- TODO i18n --%>
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -10,7 +10,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-hand-holding-heart"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Oddam w dobre ręce</div>
+        <div class="sidebar-brand-text mx-3"><spring:message code="put.it.in.good.hands"/></div>
     </a>
 
     <!-- Divider -->
@@ -28,7 +28,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Zarządzanie
+        <spring:message code="admin.panel.management"/>
     </div>
 
     <!-- Nav Item - Institutions Collapse Menu -->
@@ -36,17 +36,20 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInstitutions"
            aria-expanded="true" aria-controls="collapseInstitutions">
             <i class="fas fa-fw fa-clinic-medical"></i>
-            <span>Instytucje</span>
+            <span><spring:message code="admin.panel.institutions"/></span>
         </a>
         <div id="collapseInstitutions" class="collapse" aria-labelledby="headingInstitutions"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/institutions"/>">Lista
-                    instytucji</a>
-                <a class="collapse-item" href="<c:url value="/institutions/add"/>">Dodaj
-                    instytucję</a>
-                <a class="collapse-item" href="<c:url value="/institutions/edit"/>">Edytuj/Usuń
-                    instytucję</a>
+                <a class="collapse-item" href="<c:url value="/institutions"/>">
+                    <spring:message code="list.of.institutions"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/institutions/add"/>">
+                    <spring:message code="add.institution"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/institutions/edit"/>">
+                    <spring:message code="edit.delete.institution"/>
+                </a>
             </div>
         </div>
     </li>
@@ -56,17 +59,20 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
            aria-expanded="true" aria-controls="collapseCategories">
             <i class="fas fa-fw fa-grip-horizontal"></i>
-            <span>Kategorie</span>
+            <span><spring:message code="admin.panel.categories"/></span>
         </a>
         <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/categories"/>">Lista
-                    kategorii</a>
-                <a class="collapse-item" href="<c:url value="/categories/add"/>">Dodaj
-                    kategorię</a>
-                <a class="collapse-item" href="<c:url value="/categories/edit"/>">Edytuj/Usuń
-                    kategorię</a>
+                <a class="collapse-item" href="<c:url value="/categories"/>">
+                    <spring:message code="list.of.categories"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/categories/add"/>">
+                    <spring:message code="add.category"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/categories/edit"/>">
+                    <spring:message code="edit.delete.category"/>
+                </a>
             </div>
         </div>
     </li>
@@ -76,17 +82,20 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDonations"
            aria-expanded="true" aria-controls="collapseDonations">
             <i class="fas fa-hand-holding-heart fa-grip-horizontal"></i>
-            <span>Donacje</span>
+            <span><spring:message code="admin.panel.donations"/></span>
         </a>
         <div id="collapseDonations" class="collapse" aria-labelledby="headingDonations"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/donations/"/>">Lista
-                    donacji</a>
-                <a class="collapse-item" href="<c:url value="/donations/add"/>">Dodaj
-                    donację</a>
-                <a class="collapse-item" href="<c:url value="/donations/edit"/>">Edytuj/Usuń
-                    donację</a>
+                <a class="collapse-item" href="<c:url value="/donations/"/>">
+                    <spring:message code="list.of.donations"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/donations/add"/>">
+                    <spring:message code="add.donation"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/donations/edit"/>">
+                    <spring:message code="edit.delete.donation"/>
+                </a>
             </div>
         </div>
     </li>
@@ -96,17 +105,20 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDonationStatuses"
            aria-expanded="true" aria-controls="collapseDonationStatuses">
             <i class="fas fa-shipping-fast fa-grip-horizontal"></i>
-            <span>Statusy donacji</span>
+            <span><spring:message code="admin.panel.donation.statuses"/></span>
         </a>
         <div id="collapseDonationStatuses" class="collapse" aria-labelledby="headingUsers"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/donationStatus"/>">Lista
-                    statusów</a>
-                <a class="collapse-item" href="<c:url value="/donationStatus/add"/>">Dodaj
-                    status</a>
-                <a class="collapse-item" href="<c:url value="/donationStatus/edit"/>">Edytuj/Usuń
-                    status</a>
+                <a class="collapse-item" href="<c:url value="/donationStatus"/>">
+                    <spring:message code="list.of.statuses"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/donationStatus/add"/>">
+                    <spring:message code="add.status"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/donationStatus/edit"/>">
+                    <spring:message code="edit.delete.status"/>
+                </a>
             </div>
         </div>
     </li>
@@ -116,16 +128,19 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
            aria-expanded="true" aria-controls="collapseUsers">
             <i class="fas fa-users fa-grip-horizontal"></i>
-            <span>Użytkownicy</span>
+            <span><spring:message code="admin.panel.users"/></span>
         </a>
         <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/users"/>">Lista
-                    użytkowników</a>
-                <a class="collapse-item" href="<c:url value="/users/add"/>">Dodaj
-                    użytkownika</a>
-                <a class="collapse-item" href="<c:url value="/users/edit"/>">Edytuj/Usuń
-                    użytkownika</a>
+                <a class="collapse-item" href="<c:url value="/users"/>">
+                    <spring:message code="list.of.users"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/users/add"/>">
+                    <spring:message code="add.user"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/users/edit"/>">
+                    <spring:message code="edit.delete.user"/>
+                </a>
             </div>
         </div>
     </li>
@@ -135,17 +150,20 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmins"
            aria-expanded="true" aria-controls="collapseAdmins">
             <i class="fas fa-users-cog fa-grip-horizontal"></i>
-            <span>Administratorzy</span>
+            <span><spring:message code="admin.panel.administrators"/></span>
         </a>
         <div id="collapseAdmins" class="collapse" aria-labelledby="headingAdmins"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<c:url value="/admins"/>">Lista
-                    adminów</a>
-                <a class="collapse-item" href="<c:url value="/admins/add"/>">Dodaj
-                    admina</a>
-                <a class="collapse-item" href="<c:url value="/admins/edit"/>">Edytuj/Usuń
-                    admina</a>
+                <a class="collapse-item" href="<c:url value="/admins"/>">
+                    <spring:message code="list.of.administrators"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/admins/add"/>">
+                    <spring:message code="add.admin"/>
+                </a>
+                <a class="collapse-item" href="<c:url value="/admins/edit"/>">
+                    <spring:message code="edit.delete.admin"/>
+                </a>
             </div>
         </div>
     </li>

@@ -108,7 +108,7 @@ public class UserService {
                     "Thank you for signing up. To activate the account click on the following link:" +
                     "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "\n\n" +
 
-                    "\"Leave it in good hands\" team.\n\n" +
+                    "\"Put it in good hands\" team.\n\n" +
 
                     "In helping others, we shall help ourselves, for whatever good we give out completes the circle and comes back to us.\n" +
                     "~Flora Edwards";

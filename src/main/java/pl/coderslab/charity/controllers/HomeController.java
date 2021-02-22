@@ -49,7 +49,7 @@ public class HomeController {
     @GetMapping("/adminPanel")
     public String adminPanel(Model model) throws ParseException {
         Locale locale = LocaleContextHolder.getLocale();
-
+        String language = locale.getLanguage();
         Integer donationSum = donationService.donationSum();
         int donatedInstitutionsSum = donationService.distinctInstitutionsCount();
         Integer numberOfUsers = userService.countAllUsers();
@@ -57,7 +57,7 @@ public class HomeController {
         List<String> donationsSumsInLastTwelveMonths = donationService.donationsSumsInLastTwelveMonths();
         List<String> donationsInLastTwelveMonths = donationService.donationsInLastTwelveMonths();
         List<String> chartLabels = donationService.lastTwelveMonthsNames(locale);
-        List<String> pieChartLabels = donationService.chartLabels(messageSource.getMessage("other.institutions", new Object[0], locale));
+        List<String> pieChartLabels = donationService.chartLabels(language);
         List<Long> pieChartValues = donationService.pieChartValues();
 
         model.addAttribute("donationSum", donationSum);
