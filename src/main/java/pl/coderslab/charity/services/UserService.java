@@ -92,7 +92,7 @@ public class UserService {
             text = "Witaj " + userDto.getFirstName() + ",\n\n" +
 
                     "Dziękujemy za rejestrację. Aby aktywować konto, kliknij następujący link:\n" +
-                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "\n\n" +
+                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "&lang=pl\n\n" +
 
                     "Zespół \"Oddam w dobre ręce\"\n\n" +
 
@@ -106,7 +106,7 @@ public class UserService {
             text = "Hello " + userDto.getFirstName() + ",\n\n" +
 
                     "Thank you for signing up. To activate the account click on the following link:" +
-                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "\n\n" +
+                    "http://localhost:8080/confirm-account?token=" + verificationToken.getToken() + "&lang=en\n\n" +
 
                     "\"Put it in good hands\" team.\n\n" +
 
@@ -142,7 +142,7 @@ public class UserService {
             text = "Witaj " + userDto.getFirstName() + ",\n\n" +
 
                     "Aby zresetować hasło, kliknij następujący link:\n" +
-                    "http://localhost:8080/password-reset/token-validation?token=" + passwordResetToken.getToken() + "\n" +
+                    "http://localhost:8080/password-reset/token-validation?token=" + passwordResetToken.getToken() + "&lang=pl\n" +
                     "Jeżeli nie żądałeś zmiany hasła zignoruj tę wiadomość.\n\n" +
 
                     "Zespół \"Oddam w dobre ręce\"\n\n" +
@@ -157,7 +157,7 @@ public class UserService {
             text = "Hello " + userDto.getFirstName() + ",\n\n" +
 
                     "To reset your password, click the following link:\n" +
-                    "http://localhost:8080/password-reset/token-validation?token=" + passwordResetToken.getToken() + "\n" +
+                    "http://localhost:8080/password-reset/token-validation?token=" + passwordResetToken.getToken() + "&lang=en\n" +
                     "If you have not requested a password change, ignore this message.\n\n" +
 
                     "\"Leave it in good hands\" team.\n\n" +

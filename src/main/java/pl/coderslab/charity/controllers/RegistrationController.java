@@ -33,18 +33,17 @@ public class RegistrationController {
     public ModelAndView processAddUser(@Valid UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("/registration/register");
-            
+
             /* Error messages have been separated for each field instead of using 
             the form:errors tag to ensure that an error due to lack of completion 
             of the form field takes precedence over other error messages and that 
             a maximum of one error message associated with incorrectly entered 
             data is displayed below each form field. */
-           
             String firstNameErrorMessage = notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField("firstName", bindingResult);
             String lastNameErrorMessage = notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField("lastName", bindingResult);
             String emailErrorMessage = notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField("email", bindingResult);
             String passwordErrorMessage = notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField("password", bindingResult);
-            
+
             modelAndView.addObject("firstNameErrorMessage", firstNameErrorMessage);
             modelAndView.addObject("lastNameErrorMessage", lastNameErrorMessage);
             modelAndView.addObject("emailErrorMessage", emailErrorMessage);
@@ -81,8 +80,8 @@ public class RegistrationController {
 
         return modelAndView;
     }
-    
-    public static String getNotBlankErrorMessageIfPresentByField(String field, BindingResult bindingResult){
+
+    public static String getNotBlankErrorMessageIfPresentByField(String field, BindingResult bindingResult) {
         return bindingResult
                 .getFieldErrors()
                 .stream()
@@ -91,9 +90,9 @@ public class RegistrationController {
                 .findFirst()
                 .orElse(null);
     }
-    
-    public static String getAnyErrorMessageIfPresentByField(String field, BindingResult bindingResult){
-       return bindingResult
+
+    public static String getAnyErrorMessageIfPresentByField(String field, BindingResult bindingResult) {
+        return bindingResult
                 .getFieldErrors()
                 .stream()
                 .filter(x -> x.getField().equals(field))
@@ -101,13 +100,11 @@ public class RegistrationController {
                 .findFirst()
                 .orElse(null);
     }
-    
-    public static String notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField(String field, BindingResult bindingResult){
-        return getNotBlankErrorMessageIfPresentByField(field, bindingResult) != null 
-                    ? getNotBlankErrorMessageIfPresentByField(field, bindingResult)
-                    : getAnyErrorMessageIfPresentByField(field, bindingResult);
+
+    public static String notBlankErrorMessageIfPresentElseOtherErrorMessageElseNullByField(String field, BindingResult bindingResult) {
+        return getNotBlankErrorMessageIfPresentByField(field, bindingResult) != null
+                ? getNotBlankErrorMessageIfPresentByField(field, bindingResult)
+                : getAnyErrorMessageIfPresentByField(field, bindingResult);
     }
-    
+
 }
-
-
