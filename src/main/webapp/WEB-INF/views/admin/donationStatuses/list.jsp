@@ -1,16 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<%-- TODO i18n --%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Lista statusów donacji</title>
+        <title><spring:message code="list.of.donation.statuses"/></title>
         <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
 
         <%-- TODO - CDNs with local fallbacks --%>
@@ -27,7 +26,6 @@
               rel="stylesheet">
         <%-- TODO - end --%>
     </head>
-
     <body id="page-top">
 
         <!-- Page Wrapper -->
@@ -59,21 +57,21 @@
                                 <!-- DataTables -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Lista statusów donacji</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary"><spring:message code="list.of.donation.statuses"/></h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Nazwa</th>
-                                                        <th>Nazwa po angielsku</th>
+                                                        <th><spring:message code="donation.statuses.list.name.in.polish"/></th>
+                                                        <th><spring:message code="donation.statuses.list.name"/></th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Nazwa</th>
-                                                        <th>Nazwa po angielsku</th>
+                                                        <th><spring:message code="donation.statuses.list.name.in.polish"/></th>
+                                                        <th><spring:message code="donation.statuses.list.name"/></th>
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
