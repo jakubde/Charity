@@ -1,16 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<%-- TODO i18n --%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Błąd</title>
+    <title><spring:message code="self.delete.error"/></title>
     <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
 
     <%-- TODO - CDNs with local fallbacks --%>
@@ -24,7 +23,6 @@
     <link href="<c:url value="/resources/adminPanel/css/sb-admin-2.min.css"/>" rel="stylesheet">
     <%-- TODO - end --%>
 </head>
-
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -55,11 +53,15 @@
                         <!-- Custom Text Color Utilities -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Błąd</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                    <spring:message code="self.delete.error"/>
+                                </h6>
                             </div>
                             <div class="card-body">
-                                <p>Nie można usunąć swojego własnego konta.</p>
-                                <a href="<c:url value="/admins/edit"/>" class="btn btn-primary btn-ok">Powrót</a>
+                                <p><spring:message code="you.cannot.delete.your.own.account"/></p>
+                                <a href="<c:url value="/admins/edit"/>" class="btn btn-primary btn-ok">
+                                    <spring:message code="self.delete.back"/>
+                                </a>
                             </div>
                         </div>
                     </div>
