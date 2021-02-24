@@ -1,17 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<%-- TODO i18n --%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Dodawanie kategorii</title>
+        <title><spring:message code="adding.a.category"/></title>
         <link rel="shortcut icon" type="image/png" href="<c:url value="/resources/images/favicon.png"/>"/>
 
         <%-- TODO - CDNs with local fallbacks --%>
@@ -25,7 +24,6 @@
         <link href="<c:url value="/resources/adminPanel/css/sb-admin-2.min.css"/>" rel="stylesheet">
         <%-- TODO - end --%>
     </head>
-
     <body id="page-top">
 
         <!-- Page Wrapper -->
@@ -57,23 +55,28 @@
                                 <!-- Custom Text Color Utilities -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Dodawanie kategorii</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary"><spring:message code="adding.a.category"/></h6>
                                     </div>
                                     <div class="card-body">
                                         <form:form method="post" cssClass="user" modelAttribute="categoryDto"
                                                    id="categoryAddForm">
                                             <div class="form-group">
+                                                <form:label path="name"><b><spring:message code="categories.polish.name"/></b></form:label>
+                                                <spring:message code="categories.polish.name" var="categoriesPolishName"/>
                                                 <form:input path="name" class="form-control form-control-user"
-                                                            placeholder="Nazwa"/>
+                                                            placeholder="${categoriesPolishName}"/>
                                             </div>
                                             <div class="form-group">
+                                                <form:label path="nameEng"><b><spring:message code="categories.name"/></b></form:label>
+                                                <spring:message code="categories.name" var="categoriesName"/>
                                                 <form:input path="nameEng" class="form-control form-control-user"
-                                                            placeholder="Nazwa po angielsku"/>
+                                                            placeholder="${categoriesName}"/>
                                             </div>
+                                            <hr>
                                             <a href="javascript:{}"
                                                onclick="document.getElementById('categoryAddForm').submit();"
                                                class="btn btn-primary btn-user btn-block">
-                                                Zatwierdź
+                                                <spring:message code="categories.confirm"/>
                                             </a>
                                         </form:form>
                                     </div>

@@ -61,7 +61,7 @@
                                                 <th><spring:message code="admins.list.email"/></th>
                                                 <th><spring:message code="admins.list.first.name"/></th>
                                                 <th><spring:message code="admins.list.last.name"/></th>
-                                                <th><spring:message code="editable.list.action"/></th>
+                                                <th><spring:message code="admins.editable.list.action"/></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -69,7 +69,7 @@
                                                 <th><spring:message code="admins.list.email"/></th>
                                                 <th><spring:message code="admins.list.first.name"/></th>
                                                 <th><spring:message code="admins.list.last.name"/></th>
-                                                <th><spring:message code="editable.list.action"/></th>
+                                                <th><spring:message code="admins.editable.list.action"/></th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -79,11 +79,11 @@
                                                     <td>${adminDto.firstName}</td>
                                                     <td>${adminDto.lastName}</td>
                                                     <td style="text-align:center; white-space:nowrap"><a
-                                                            href="<c:url value="/admins/edit/${adminDto.id}"/>"><spring:message code="editable.list.edit"/></a>　|　<a
+                                                            href="<c:url value="/admins/edit/${adminDto.id}"/>"><spring:message code="admins.editable.list.edit"/></a>　|　<a
                                                             href="#"
                                                             data-href="<c:url value="/admins/delete/${adminDto.id}"/>"
                                                             data-toggle="modal"
-                                                            data-target="#deleteModal"><spring:message code="editable.list.delete"/></a>
+                                                            data-target="#deleteModal"><spring:message code="admins.editable.list.delete"/></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
