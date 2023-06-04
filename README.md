@@ -14,7 +14,7 @@ As of now, this project is not maintained and is considered outdated. The techno
 
 ## Old README
 
-The old README.md file, which includes more details about the project and its initial setup, has been renamed to README_old.md and can be accessed from the same directory. You can also directly access it from [https://github.com/jakubde/Charity/blob/master/README_old.md](./README_old.md).
+The old README.md file, which includes more details about the project and its initial setup, has been renamed to README_old.md and can be accessed from the same directory. You can also directly access it from [here](./README_old.md).
 
 ## Technologies Used
 
@@ -32,7 +32,6 @@ This project was developed using the following technologies:
 - ModelMapper
 - JSTL & Tomcat
 - Spring Mail
-- etc.
 
 ## Conclusion
 
